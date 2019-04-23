@@ -1,0 +1,605 @@
+
+mysql> create database student default charset=utf8;
+ERROR 1007 (HY000): Can't create database 'student'; database exists
+mysql> create database student1 default charset=utf8;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| blog               |
+| homework           |
+| mysql              |
+| performance_schema |
+| student            |
+| student1           |
+| sys                |
+| temp               |
+| tmp                |
++--------------------+
+10 rows in set (0.03 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| blog               |
+| homework           |
+| mysql              |
+| performance_schema |
+| student            |
+| student1           |
+| sys                |
+| temp               |
+| tmp                |
++--------------------+
+10 rows in set (0.00 sec)
+
+mysql> use student1;
+Database changed
+mysql> select database()
+    -> ;
++------------+
+| database() |
++------------+
+| student1   |
++------------+
+1 row in set (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| blog               |
+| homework           |
+| mysql              |
+| performance_schema |
+| student            |
+| student1           |
+| sys                |
+| temp               |
+| tmp                |
++--------------------+
+10 rows in set (0.00 sec)
+
+mysql> drop tmp;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'tmp' at line 1
+mysql> drop temp;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'temp' at line 1
+mysql> use temp;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_temp |
++----------------+
+| course         |
+| file           |
+| forum          |
+| grade          |
+| rank           |
+| scg            |
+| scg1           |
+| student        |
+| tmp            |
+| user           |
++----------------+
+10 rows in set (0.01 sec)
+
+mysql> drop database temp;
+Query OK, 10 rows affected (0.10 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| blog               |
+| homework           |
+| mysql              |
+| performance_schema |
+| student            |
+| student1           |
+| sys                |
+| tmp                |
++--------------------+
+9 rows in set (0.01 sec)
+
+mysql> use student1;
+Database changed
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> create table if not exists student(
+    -> sno char(6) primary key,
+    -> sname varchar(100) not null,
+    -> sbirthday datetime default now(),
+    -> ssex char(2),
+    -> sclass char(6)
+    -> ) engine=innodb;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select database();
++------------+
+| database() |
++------------+
+| student1   |
++------------+
+1 row in set (0.01 sec)
+
+mysql> use student1;
+Database changed
+mysql> show tables;
++--------------------+
+| Tables_in_student1 |
++--------------------+
+| student            |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> desc student;
++-----------+--------------+------+-----+-------------------+-------+
+| Field     | Type         | Null | Key | Default           | Extra |
++-----------+--------------+------+-----+-------------------+-------+
+| sno       | char(6)      | NO   | PRI | NULL              |       |
+| sname     | varchar(100) | NO   |     | NULL              |       |
+| sbirthday | datetime     | YES  |     | CURRENT_TIMESTAMP |       |
+| ssex      | char(2)      | YES  |     | NULL              |       |
+| sclass    | char(6)      | YES  |     | NULL              |       |
++-----------+--------------+------+-----+-------------------+-------+
+5 rows in set (0.00 sec)
+
+mysql> insert into student(sno,sname) values('0001','张三丰')
+    -> ;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student(sname,ssex) values('张翠山','男');
+ERROR 1364 (HY000): Field 'sno' doesn't have a default value
+mysql> insert into student(ssex) values('男');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''男')' at line 1
+mysql> insert into student(ssex) value('男');
+ERROR 1364 (HY000): Field 'sno' doesn't have a default value
+mysql> insert into student(sno,ssex) value('0002','男);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'value0002',''男')' at line 1
+mysql> insert into student(sno,ssex) value0002','男');
+    '> ;
+    '> ;
+    '> ^C
+
+^C
+mysql> insert into student(sno,ssex) value('0002','男');
+ERROR 1364 (HY000): Field 'sname' doesn't have a default value
+mysql> select * from student;
++------+-----------+---------------------+------+--------+
+| sno  | sname     | sbirthday           | ssex | sclass |
++------+-----------+---------------------+------+--------+
+| 0001 | 张三丰    | 2019-04-23 15:53:23 | NULL | NULL   |
++------+-----------+---------------------+------+--------+
+1 row in set (0.00 sec)
+
+mysql> desc student;
++-----------+--------------+------+-----+-------------------+-------+
+| Field     | Type         | Null | Key | Default           | Extra |
++-----------+--------------+------+-----+-------------------+-------+
+| sno       | char(6)      | NO   | PRI | NULL              |       |
+| sname     | varchar(100) | NO   |     | NULL              |       |
+| sbirthday | datetime     | YES  |     | CURRENT_TIMESTAMP |       |
+| ssex      | char(2)      | YES  |     | NULL              |       |
+| sclass    | char(6)      | YES  |     | NULL              |       |
++-----------+--------------+------+-----+-------------------+-------+
+5 rows in set (0.00 sec)
+
+mysql> insert into student(sno,sname,sbirthday) values('0003','与代言','1546-03-23');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student;+------+-----------+---------------------+------+--------+
+| sno  | sname     | sbirthday           | ssex | sclass |
++------+-----------+---------------------+------+--------+
+| 0001 | 张三丰    | 2019-04-23 15:53:23 | NULL | NULL   |
+| 0003 | 与代言    | 1546-03-23 00:00:00 | NULL | NULL   |
++------+-----------+---------------------+------+--------+
+2 rows in set (0.00 sec)
+
+mysql> insert into student(sno,sname,sbirthday) values('0001','赵敏','1546-03-23');
+ERROR 1062 (23000): Duplicate entry '0001' for key 'PRIMARY'
+mysql> create table tmp(id int primary key auto_increment,name varchar(6) unique);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc tmp;
++-------+------------+------+-----+---------+----------------+
+| Field | Type       | Null | Key | Default | Extra          |
++-------+------------+------+-----+---------+----------------+
+| id    | int(11)    | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(6) | YES  | UNI | NULL    |                |
++-------+------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into tmp(name) values('tom');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from tmp;
++----+------+
+| id | name |
++----+------+
+|  1 | tom  |
++----+------+
+1 row in set (0.00 sec)
+
+mysql> insert into tmp(name) values('jerry');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from tmp;
++----+-------+
+| id | name  |
++----+-------+
+|  2 | jerry |
+|  1 | tom   |
++----+-------+
+2 rows in set (0.00 sec)
+
+mysql> insert into tmp(name) values('maine');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from tmp;
++----+-------+
+| id | name  |
++----+-------+
+|  2 | jerry |
+|  3 | maine |
+|  1 | tom   |
++----+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from tmp order by id;
++----+-------+
+| id | name  |
++----+-------+
+|  1 | tom   |
+|  2 | jerry |
+|  3 | maine |
++----+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into tmp(name) values('tom');
+ERROR 1062 (23000): Duplicate entry 'tom' for key 'name'
+mysql> insert into tmp(name) values(null);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from tmp order by id;
++----+-------+
+| id | name  |
++----+-------+
+|  1 | tom   |
+|  2 | jerry |
+|  3 | maine |
+|  5 | NULL  |
++----+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into tmp(name) values(null);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from tmp order by id;
++----+-------+
+| id | name  |
++----+-------+
+|  1 | tom   |
+|  2 | jerry |
+|  3 | maine |
+|  5 | NULL  |
+|  6 | NULL  |
++----+-------+
+5 rows in set (0.00 sec)
+
+mysql> insert into tmp(id,name) values(null,null);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from tmp order by id;
++----+-------+
+| id | name  |
++----+-------+
+|  1 | tom   |
+|  2 | jerry |
+|  3 | maine |
+|  5 | NULL  |
+|  6 | NULL  |
+|  7 | NULL  |
++----+-------+
+6 rows in set (0.00 sec)
+
+mysql> create table t1(id primary key, sid primary key);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key, sid primary key)' at line 1
+mysql> create table t1(id primary key, sid unique ,cid unique);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key, sid unique ,cid unique)' at line 1
+mysql> create table t1(id int primary key, sid int unique ,cid int unique);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table t2(id int primary key, sid int primary key);
+ERROR 1068 (42000): Multiple primary key defined
+mysql> create table course(
+    -> cno char(4) primary key,
+    -> cname varchar(50) not null,
+    -> ccredit float
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc course;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| cno     | char(4)     | NO   | PRI | NULL    |       |
+| cname   | varchar(50) | NO   |     | NULL    |       |
+| ccredit | float       | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.01 sec)
+
+mysql> show create table course;
++--------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table  | Create Table                                                                                                                                                                 |
++--------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| course | CREATE TABLE `course` (
+  `cno` char(4) NOT NULL,
+  `cname` varchar(50) NOT NULL,
+  `ccredit` float DEFAULT NULL,
+  PRIMARY KEY (`cno`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 |
++--------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> create table grade(
+    -> sno char(6),
+    -> cno char(4),
+    -> score float default 0,
+    -> primary key(sno,cno)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc grade;
++-------+---------+------+-----+---------+-------+
+| Field | Type    | Null | Key | Default | Extra |
++-------+---------+------+-----+---------+-------+
+| sno   | char(6) | NO   | PRI | NULL    |       |
+| cno   | char(4) | NO   | PRI | NULL    |       |
+| score | float   | YES  |     | 0       |       |
++-------+---------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> primary key(sno,cno)                                                         -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key(sno,cno)' at line 1
+mysql> show tables;
++--------------------+
+| Tables_in_student1 |
++--------------------+
+| course             |
+| grade              |
+| student            |
+| t1                 |
+| tmp                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from course;
+Empty set (0.00 sec)
+
+mysql> desc course;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| cno     | char(4)     | NO   | PRI | NULL    |       |
+| cname   | varchar(50) | NO   |     | NULL    |       |
+| ccredit | float       | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> drop table t1;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_student1 |
++--------------------+
+| course             |
+| grade              |
+| student            |
+| tmp                |
++--------------------+
+4 rows in set (0.00 sec)
+
+mysql> show create table course;
++--------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table  | Create Table                                                                                                                                                                 |
++--------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| course | CREATE TABLE `course` (
+  `cno` char(4) NOT NULL,
+  `cname` varchar(50) NOT NULL,
+  `ccredit` float DEFAULT NULL,
+  PRIMARY KEY (`cno`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 |
++--------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> desc student;
++-----------+--------------+------+-----+-------------------+-------+
+| Field     | Type         | Null | Key | Default           | Extra |
++-----------+--------------+------+-----+-------------------+-------+
+| sno       | char(6)      | NO   | PRI | NULL              |       |
+| sname     | varchar(100) | NO   |     | NULL              |       |
+| sbirthday | datetime     | YES  |     | CURRENT_TIMESTAMP |       |
+| ssex      | char(2)      | YES  |     | NULL              |       |
+| sclass    | char(6)      | YES  |     | NULL              |       |
++-----------+--------------+------+-----+-------------------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table student add sage int default 0;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++-----------+--------------+------+-----+-------------------+-------+
+| Field     | Type         | Null | Key | Default           | Extra |
++-----------+--------------+------+-----+-------------------+-------+
+| sno       | char(6)      | NO   | PRI | NULL              |       |
+| sname     | varchar(100) | NO   |     | NULL              |       |
+| sbirthday | datetime     | YES  |     | CURRENT_TIMESTAMP |       |
+| ssex      | char(2)      | YES  |     | NULL              |       |
+| sclass    | char(6)      | YES  |     | NULL              |       |
+| sage      | int(11)      | YES  |     | 0                 |       |
++-----------+--------------+------+-----+-------------------+-------+
+6 rows in set (0.00 sec)
+
+mysql> alter table student drop sage;
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++-----------+--------------+------+-----+-------------------+-------+
+| Field     | Type         | Null | Key | Default           | Extra |
++-----------+--------------+------+-----+-------------------+-------+
+| sno       | char(6)      | NO   | PRI | NULL              |       |
+| sname     | varchar(100) | NO   |     | NULL              |       |
+| sbirthday | datetime     | YES  |     | CURRENT_TIMESTAMP |       |
+| ssex      | char(2)      | YES  |     | NULL              |       |
+| sclass    | char(6)      | YES  |     | NULL              |       |
++-----------+--------------+------+-----+-------------------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table student modify ssex char(4) default '男';
+Query OK, 2 rows affected (0.03 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++-----------+--------------+------+-----+-------------------+-------+
+| Field     | Type         | Null | Key | Default           | Extra |
++-----------+--------------+------+-----+-------------------+-------+
+| sno       | char(6)      | NO   | PRI | NULL              |       |
+| sname     | varchar(100) | NO   |     | NULL              |       |
+| sbirthday | datetime     | YES  |     | CURRENT_TIMESTAMP |       |
+| ssex      | char(4)      | YES  |     | 男                |       |
+| sclass    | char(6)      | YES  |     | NULL              |       |
++-----------+--------------+------+-----+-------------------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table student change ssex sex char(4) default '女';
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student;
++-----------+--------------+------+-----+-------------------+-------+
+| Field     | Type         | Null | Key | Default           | Extra |
++-----------+--------------+------+-----+-------------------+-------+
+| sno       | char(6)      | NO   | PRI | NULL              |       |
+| sname     | varchar(100) | NO   |     | NULL              |       |
+| sbirthday | datetime     | YES  |     | CURRENT_TIMESTAMP |       |
+| sex       | char(4)      | YES  |     | 女                |       |
+| sclass    | char(6)      | YES  |     | NULL              |       |
++-----------+--------------+------+-----+-------------------+-------+
+5 rows in set (0.00 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_student1 |
++--------------------+
+| course             |
+| grade              |
+| student            |
+| tmp                |
++--------------------+
+4 rows in set (0.00 sec)
+
+mysql> show create table tmp;
++-------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table | Create Table                                                                                                                                                                                            |
++-------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| tmp   | CREATE TABLE `tmp` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(6) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 |
++-------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> alter table tmp rename temp engine=myisam;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'engine=myisam' at line 1
+mysql> alter table tmp rename temp ;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_student1 |
++--------------------+
+| course             |
+| grade              |
+| student            |
+| temp               |
++--------------------+
+4 rows in set (0.00 sec)
+
+mysql> show create table temp;
++-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table | Create Table                                                                                                                                                                                             |
++-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| temp  | CREATE TABLE `temp` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(6) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 |
++-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.01 sec)
+
+mysql> alter table temp default charset=gbk;
+Query OK, 0 rows affected (0.00 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show create table temp;
++-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table | Create Table                                                                                                                                                                                                               |
++-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| temp  | CREATE TABLE `temp` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(6) CHARACTER SET utf8 DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=gbk |
++-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> alter table temp engine=myisam;
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> show create table temp;
++-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table | Create Table                                                                                                                                                                                                               |
++-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| temp  | CREATE TABLE `temp` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(6) CHARACTER SET utf8 DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=gbk |
++-------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> drop table temp;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_student1 |
++--------------------+
+| course             |
+| grade              |
+| student            |
++--------------------+
+3 rows in set (0.00 sec)
+
+mysql> 
+
