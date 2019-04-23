@@ -21,6 +21,7 @@
 - 克隆版本库  
 
     - git clone  <版本库地址>  <本地目录>           将远端服务上的项目克隆到本地
+    - https://github.com/landmarkcsl/1903.git
 
 - 创建版本库 
 
@@ -41,21 +42,19 @@
 
 - 将本地代码推送到远端托管服务器
 
-    - # https://github.com/landmarkcsl/bj1092
-
     - git push <远程主机名> <本地分支名>:<远程分支名>  如果远程分支不存在，则创建
-    - git push origin master   默认推送到主分支
+- git push origin master   默认推送到主分支
     - git push origin ：分支名   删除远程分支
     - git push --all origin 将本地分支推送到服务器
     - git push --force origin   如果远程主机的版本比本地版本更新，推送时Git会报错，要求先在本地做`git pull`合并差异，然后再推送到远程主机。这时，如果你一定要推送，可以使用`--force`选项。
-
+    
 - 从远端服务器拉取内容
     - git pull <远程主机名> <远程分支名>:<本地分支名>
     - --allow-unrelated-histories  解决本地和远程库不同的问题
 
 - 删除或恢复文件
     - git rm <file>  从版本库中删除文件
-    - git checkout -- <file> 从版本库中恢复一个文件
+    - git checkout   <file> 从版本库中恢复一个文件
 
 - 查看版本库状态
 
