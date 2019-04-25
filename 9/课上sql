@@ -1,0 +1,460 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| blog               |
+| game               |
+| homework           |
+| mysql              |
+| performance_schema |
+| student            |
+| student1           |
+| sys                |
+| tmp                |
++--------------------+
+10 rows in set (0.01 sec)
+
+mysql> use student1;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> quit
+Bye
+python@ubuntu:~$ cd /etc/mysql/mysql.conf.d/
+python@ubuntu:/etc/mysql/mysql.conf.d$ ls
+mysqld.cnf  mysqld_old.cnf  mysqld_safe_syslog.cnf
+python@ubuntu:/etc/mysql/mysql.conf.d$ sudo vim
+vim        vim.basic  vimdiff    vim.tiny   vimtutor   
+python@ubuntu:/etc/mysql/mysql.conf.d$ sudo vim mysqld.cnf 
+python@ubuntu:/etc/mysql/mysql.conf.d$ sudo service mysql restart
+python@ubuntu:/etc/mysql/mysql.conf.d$ mysql -uroot -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 3
+Server version: 5.7.25-0ubuntu0.16.04.2 (Ubuntu)
+
+Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| blog               |
+| game               |
+| homework           |
+| mysql              |
+| performance_schema |
+| student            |
+| student1           |
+| sys                |
+| tmp                |
++--------------------+
+10 rows in set (0.00 sec)
+
+mysql> use student1;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++--------------------+
+| Tables_in_student1 |
++--------------------+
+| account            |
+| course             |
+| grade              |
+| student            |
+| tmp                |
+| tmp1               |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from grade;
++------+------+-------+
+| sno  | cno  | score |
++------+------+-------+
+| 0001 | 0001 |    90 |
+| 0001 | 0003 |    78 |
+| 0003 | 0004 |    98 |
+| 0004 | 0003 |    98 |
+| 0005 | 0004 |    78 |
++------+------+-------+
+5 rows in set (0.01 sec)
+
+mysql> select * from student;
++------+------------------------------------------+---------------------+--------+--------+---------------+
+| sno  | sname                                    | sbirthday           | sex    | sclass | hobby         |
++------+------------------------------------------+---------------------+--------+--------+---------------+
+| 0001 | 张三丰                                   | 2019-04-23 15:53:23 | 男     | 1903   | 运动,电影     |
+| 0003 | 与代言                                   | 1546-03-23 00:00:00 | 女     | 1904   | NULL          |
+| 0004 | 姜文                                     | 2019-04-24 09:55:25 | 人妖   | 1904   | NULL          |
+| 0005 | 姜武                                     | 2019-04-24 09:56:17 | 女     | 1903   | NULL          |
+| 0006 | 吴京                                     | 2019-04-24 10:37:38 | 男     | 1903   | 运动,电影     |
+| 0007 | 96835dd8bfa718bd6447ccc87af89ae1675daeca | 2019-04-25 11:49:31 | 男     | NULL   | NULL          |
++------+------------------------------------------+---------------------+--------+--------+---------------+
+6 rows in set (0.00 sec)
+
+mysql> insert into grade values('0039','499',99);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from grade;
++------+------+-------+
+| sno  | cno  | score |
++------+------+-------+
+| 0001 | 0001 |    90 |
+| 0001 | 0003 |    78 |
+| 0003 | 0004 |    98 |
+| 0004 | 0003 |    98 |
+| 0005 | 0004 |    78 |
+| 0039 | 499  |    99 |
++------+------+-------+
+6 rows in set (0.00 sec)
+
+mysql> delete from grade where sno ='0039';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> alter table grade add constraint fk_grade_student_sno foreign key(sno) references student(sno) on delete cascade;
+Query OK, 5 rows affected (0.07 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> insert into grade values('0039','499',99);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`student1`.`grade`, CONSTRAINT `fk_grade_student_sno` FOREIGN KEY (`sno`) REFERENCES `student` (`sno`) ON DELETE CASCADE)
+mysql> select * from student;
++------+------------------------------------------+---------------------+--------+--------+---------------+
+| sno  | sname                                    | sbirthday           | sex    | sclass | hobby         |
++------+------------------------------------------+---------------------+--------+--------+---------------+
+| 0001 | 张三丰                                   | 2019-04-23 15:53:23 | 男     | 1903   | 运动,电影     |
+| 0003 | 与代言                                   | 1546-03-23 00:00:00 | 女     | 1904   | NULL          |
+| 0004 | 姜文                                     | 2019-04-24 09:55:25 | 人妖   | 1904   | NULL          |
+| 0005 | 姜武                                     | 2019-04-24 09:56:17 | 女     | 1903   | NULL          |
+| 0006 | 吴京                                     | 2019-04-24 10:37:38 | 男     | 1903   | 运动,电影     |
+| 0007 | 96835dd8bfa718bd6447ccc87af89ae1675daeca | 2019-04-25 11:49:31 | 男     | NULL   | NULL          |
++------+------------------------------------------+---------------------+--------+--------+---------------+
+6 rows in set (0.01 sec)
+
+mysql> insert into grade values('0007','0004',67);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into grade values('0008','0004',67);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`student1`.`grade`, CONSTRAINT `fk_grade_student_sno` FOREIGN KEY (`sno`) REFERENCES `student` (`sno`) ON DELETE CASCADE)
+mysql> select *  from grade;
++------+------+-------+
+| sno  | cno  | score |
++------+------+-------+
+| 0001 | 0001 |    90 |
+| 0001 | 0003 |    78 |
+| 0003 | 0004 |    98 |
+| 0004 | 0003 |    98 |
+| 0005 | 0004 |    78 |
+| 0007 | 0004 |    67 |
++------+------+-------+
+6 rows in set (0.01 sec)
+
+mysql> insert into grade values('0007','0001',89);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select *  from grade;
++------+------+-------+
+| sno  | cno  | score |
++------+------+-------+
+| 0001 | 0001 |    90 |
+| 0001 | 0003 |    78 |
+| 0003 | 0004 |    98 |
+| 0004 | 0003 |    98 |
+| 0005 | 0004 |    78 |
+| 0007 | 0001 |    89 |
+| 0007 | 0004 |    67 |
++------+------+-------+
+7 rows in set (0.00 sec)
+
+mysql> delete from student where sno = '0007';
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from student;
++------+-----------+---------------------+--------+--------+---------------+
+| sno  | sname     | sbirthday           | sex    | sclass | hobby         |
++------+-----------+---------------------+--------+--------+---------------+
+| 0001 | 张三丰    | 2019-04-23 15:53:23 | 男     | 1903   | 运动,电影     |
+| 0003 | 与代言    | 1546-03-23 00:00:00 | 女     | 1904   | NULL          |
+| 0004 | 姜文      | 2019-04-24 09:55:25 | 人妖   | 1904   | NULL          |
+| 0005 | 姜武      | 2019-04-24 09:56:17 | 女     | 1903   | NULL          |
+| 0006 | 吴京      | 2019-04-24 10:37:38 | 男     | 1903   | 运动,电影     |
++------+-----------+---------------------+--------+--------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from grade;
++------+------+-------+
+| sno  | cno  | score |
++------+------+-------+
+| 0001 | 0001 |    90 |
+| 0001 | 0003 |    78 |
+| 0003 | 0004 |    98 |
+| 0004 | 0003 |    98 |
+| 0005 | 0004 |    78 |
++------+------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table grade drop foreign key fk_grade_student_sno;
+Query OK, 0 rows affected (0.00 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table grade add constraint fk_grade_student_sno foreign key(sno) references student on delete no action;
+ERROR 1215 (HY000): Cannot add foreign key constraint
+mysql> alter table grade add constraint fk_grade_student_sno foreign key(sno) references student(sno) on delete no action;
+Query OK, 5 rows affected (0.07 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++------+-----------+---------------------+--------+--------+---------------+
+| sno  | sname     | sbirthday           | sex    | sclass | hobby         |
++------+-----------+---------------------+--------+--------+---------------+
+| 0001 | 张三丰    | 2019-04-23 15:53:23 | 男     | 1903   | 运动,电影     |
+| 0003 | 与代言    | 1546-03-23 00:00:00 | 女     | 1904   | NULL          |
+| 0004 | 姜文      | 2019-04-24 09:55:25 | 人妖   | 1904   | NULL          |
+| 0005 | 姜武      | 2019-04-24 09:56:17 | 女     | 1903   | NULL          |
+| 0006 | 吴京      | 2019-04-24 10:37:38 | 男     | 1903   | 运动,电影     |
++------+-----------+---------------------+--------+--------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> delete from student where sno='0005';
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`student1`.`grade`, CONSTRAINT `fk_grade_student_sno` FOREIGN KEY (`sno`) REFERENCES `student` (`sno`) ON DELETE NO ACTION)
+mysql> create table user1(uid int primary key auto_increment,name varchar(10));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc user1;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| uid   | int(11)     | NO   | PRI | NULL    | auto_increment |
+| name  | varchar(10) | YES  |     | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> inert into user1 values(null,'test1');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'inert into user1 values(null,'test1')' at line 1
+mysql> insert into user1 values(null,'test1');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into user1 values(null,'test2');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into user1 values(null,'test3');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from user1;
++-----+-------+
+| uid | name  |
++-----+-------+
+|   1 | test1 |
+|   2 | test2 |
+|   3 | test3 |
++-----+-------+
+3 rows in set (0.00 sec)
+
+mysql> create table info(id int primary key auto_increment,content varchar(200));
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc info;
++---------+--------------+------+-----+---------+----------------+
+| Field   | Type         | Null | Key | Default | Extra          |
++---------+--------------+------+-----+---------+----------------+
+| id      | int(11)      | NO   | PRI | NULL    | auto_increment |
+| content | varchar(200) | YES  |     | NULL    |                |
++---------+--------------+------+-----+---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into info values(null,'111'),(null,'222');
+Query OK, 2 rows affected (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from info;
++----+---------+
+| id | content |
++----+---------+
+|  1 | 111     |
+|  2 | 222     |
++----+---------+
+2 rows in set (0.00 sec)
+
+mysql> truncate info;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> alter table info add constraint fk_info_user1_id foreign key(id) references user1(uid);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from user1;
++-----+-------+
+| uid | name  |
++-----+-------+
+|   1 | test1 |
+|   2 | test2 |
+|   3 | test3 |
++-----+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from info;
+Empty set (0.00 sec)
+
+mysql> insert into info values(1,'111');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into info values(4,'111');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`student1`.`info`, CONSTRAINT `fk_info_user1_id` FOREIGN KEY (`id`) REFERENCES `user1` (`uid`))
+mysql> insert into info values(1,'111');
+ERROR 1062 (23000): Duplicate entry '1' for key 'PRIMARY'
+mysql> select * from grade;
++------+------+-------+
+| sno  | cno  | score |
++------+------+-------+
+| 0001 | 0001 |    90 |
+| 0001 | 0003 |    78 |
+| 0003 | 0004 |    98 |
+| 0004 | 0003 |    98 |
+| 0005 | 0004 |    78 |
++------+------+-------+
+5 rows in set (0.00 sec)
+
+mysql> create view as 
+    -> select * from student s ,grade g,course c where s.sno=g.sno and c.cno=g.cno;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'as 
+select * from student s ,grade g,course c where s.sno=g.sno and c.cno=g.cno' at line 1
+mysql> create view v_info as  select * from student s ,grade g,course c where s.sno=g.sno and c.cno=g.cno;
+ERROR 1060 (42S21): Duplicate column name 'sno'
+mysql> create view v_info as  select s.sno,sname,cname,c.cno,score from student s ,grade g,course c where s.sno=g.sno and c.cno=g.cno;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_student1 |
++--------------------+
+| account            |
+| course             |
+| grade              |
+| info               |
+| student            |
+| tmp                |
+| tmp1               |
+| user1              |
+| v_info             |
++--------------------+
+9 rows in set (0.00 sec)
+
+mysql> select * from v_info;
++------+-----------+---------------------+------+-------+
+| sno  | sname     | cname               | cno  | score |
++------+-----------+---------------------+------+-------+
+| 0001 | 张三丰    | 高等数学            | 0001 |    90 |
+| 0001 | 张三丰    | 编译原理            | 0003 |    78 |
+| 0003 | 与代言    | c语言程序设计       | 0004 |    98 |
+| 0004 | 姜文      | 编译原理            | 0003 |    98 |
+| 0005 | 姜武      | c语言程序设计       | 0004 |    78 |
++------+-----------+---------------------+------+-------+
+5 rows in set (0.00 sec)
+
+mysql> drop view v_info;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create view v_info as  select s.*,c.*,score from student s ,grade g,course c where s.sno=g.sno and c.cno=g.cno;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> desc v_info;
++-----------+---------------------------------------------+------+-----+---------+-------+
+| Field     | Type                                        | Null | Key | Default | Extra |
++-----------+---------------------------------------------+------+-----+---------+-------+
+| sno       | char(6)                                     | NO   |     | NULL    |       |
+| sname     | varchar(100)                                | NO   |     | NULL    |       |
+| sbirthday | datetime                                    | YES  |     | NULL    |       |
+| sex       | enum('男','女','人妖')                      | YES  |     | 男      |       |
+| sclass    | char(6)                                     | YES  |     | NULL    |       |
+| hobby     | set('运动','睡觉','电影','打豆豆')          | YES  |     | NULL    |       |
+| cno       | char(4)                                     | NO   |     | NULL    |       |
+| cname     | varchar(60)                                 | NO   |     | NULL    |       |
+| ccredit   | float                                       | YES  |     | NULL    |       |
+| pid       | char(4)                                     | YES  |     | NULL    |       |
+| score     | float                                       | YES  |     | 0       |       |
++-----------+---------------------------------------------+------+-----+---------+-------+
+11 rows in set (0.01 sec)
+
+mysql> select * from v_info;
++------+-----------+---------------------+--------+--------+---------------+------+---------------------+---------+------+-------+
+| sno  | sname     | sbirthday           | sex    | sclass | hobby         | cno  | cname               | ccredit | pid  | score |
++------+-----------+---------------------+--------+--------+---------------+------+---------------------+---------+------+-------+
+| 0001 | 张三丰    | 2019-04-23 15:53:23 | 男     | 1903   | 运动,电影     | 0001 | 高等数学            |       2 | NULL |    90 |
+| 0001 | 张三丰    | 2019-04-23 15:53:23 | 男     | 1903   | 运动,电影     | 0003 | 编译原理            |       2 | 0005 |    78 |
+| 0003 | 与代言    | 1546-03-23 00:00:00 | 女     | 1904   | NULL          | 0004 | c语言程序设计       |       4 | NULL |    98 |
+| 0004 | 姜文      | 2019-04-24 09:55:25 | 人妖   | 1904   | NULL          | 0003 | 编译原理            |       2 | 0005 |    98 |
+| 0005 | 姜武      | 2019-04-24 09:56:17 | 女     | 1903   | NULL          | 0004 | c语言程序设计       |       4 | NULL |    78 |
++------+-----------+---------------------+--------+--------+---------------+------+---------------------+---------+------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select sno,sname from v_info where score>=90;
++------+-----------+
+| sno  | sname     |
++------+-----------+
+| 0001 | 张三丰    |
+| 0003 | 与代言    |
+| 0004 | 姜文      |
++------+-----------+
+3 rows in set (0.01 sec)
+
+mysql> drop view v_info;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> create view v_info(no,name,sex,cls,birthday,cno,cname,credit,score) as  select s.*,c.*,score from student s ,grade g,course c where s.sno=g.sno and c.cno=g.cno;
+ERROR 1353 (HY000): View's SELECT and view's field list have different column counts
+mysql> create view v_info(no,name,sex,cls,birthday,hobby,cno,cname,credit,score) as  select s.*,c.*,score from student s ,grade g,course c where s.sno=g.sno and c.cno=g.cno;
+ERROR 1353 (HY000): View's SELECT and view's field list have different column counts
+mysql> create view v_info(no,name,sex,dd,cls,birthday,hobby,cno,cname,credit,score) as  select s.*,c.*,score from student s ,grade g,course c where s.sno=g.sno and c.cno=g.cno;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> desc v_info;
++----------+---------------------------------------------+------+-----+---------+-------+
+| Field    | Type                                        | Null | Key | Default | Extra |
++----------+---------------------------------------------+------+-----+---------+-------+
+| no       | char(6)                                     | NO   |     | NULL    |       |
+| name     | varchar(100)                                | NO   |     | NULL    |       |
+| sex      | datetime                                    | YES  |     | NULL    |       |
+| dd       | enum('男','女','人妖')                      | YES  |     | 男      |       |
+| cls      | char(6)                                     | YES  |     | NULL    |       |
+| birthday | set('运动','睡觉','电影','打豆豆')          | YES  |     | NULL    |       |
+| hobby    | char(4)                                     | NO   |     | NULL    |       |
+| cno      | varchar(60)                                 | NO   |     | NULL    |       |
+| cname    | float                                       | YES  |     | NULL    |       |
+| credit   | char(4)                                     | YES  |     | NULL    |       |
+| score    | float                                       | YES  |     | 0       |       |
++----------+---------------------------------------------+------+-----+---------+-------+
+11 rows in set (0.00 sec)
+
+mysql> select * from v_info;
++------+-----------+---------------------+--------+------+---------------+-------+---------------------+-------+--------+-------+
+| no   | name      | sex                 | dd     | cls  | birthday      | hobby | cno                 | cname | credit | score |
++------+-----------+---------------------+--------+------+---------------+-------+---------------------+-------+--------+-------+
+| 0001 | 张三丰    | 2019-04-23 15:53:23 | 男     | 1903 | 运动,电影     | 0001  | 高等数学            |     2 | NULL   |    90 |
+| 0001 | 张三丰    | 2019-04-23 15:53:23 | 男     | 1903 | 运动,电影     | 0003  | 编译原理            |     2 | 0005   |    78 |
+| 0003 | 与代言    | 1546-03-23 00:00:00 | 女     | 1904 | NULL          | 0004  | c语言程序设计       |     4 | NULL   |    98 |
+| 0004 | 姜文      | 2019-04-24 09:55:25 | 人妖   | 1904 | NULL          | 0003  | 编译原理            |     2 | 0005   |    98 |
+| 0005 | 姜武      | 2019-04-24 09:56:17 | 女     | 1903 | NULL          | 0004  | c语言程序设计       |     4 | NULL   |    78 |
++------+-----------+---------------------+--------+------+---------------+-------+---------------------+-------+--------+-------+
+5 rows in set (0.00 sec)
+
+mysql> show create view v_info;
++--------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------+----------------------+
+| View   | Create View                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | character_set_client | collation_connection |
++--------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------+----------------------+
+| v_info | CREATE ALGORITHM=UNDEFINED DEFINER=`skip-grants user`@`skip-grants host` SQL SECURITY DEFINER VIEW `v_info` AS select `s`.`sno` AS `no`,`s`.`sname` AS `name`,`s`.`sbirthday` AS `sex`,`s`.`sex` AS `dd`,`s`.`sclass` AS `cls`,`s`.`hobby` AS `birthday`,`c`.`cno` AS `hobby`,`c`.`cname` AS `cno`,`c`.`ccredit` AS `cname`,`c`.`pid` AS `credit`,`g`.`score` AS `score` from ((`student` `s` join `grade` `g`) join `course` `c`) where ((`s`.`sno` = `g`.`sno`) and (`c`.`cno` = `g`.`cno`)) | utf8                 | utf8_general_ci      |
++--------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+----------------------+----------------------+
+1 row in set (0.00 sec)
+
+mysql> quit
+Bye
+

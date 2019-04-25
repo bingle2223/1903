@@ -91,7 +91,7 @@ select * from zzl_student where sno = monitor and class='95031';
 
 - 左外连接  
 
-​      以左表为主，如果右边的表里没有匹配的记录，则添加一个万能记录（各个字段都为null)与之连接
+​      以左表为主(join左边出现的表)，如果右边的表里没有匹配的记录，则添加一个万能记录（各个字段都为null)与之连接
 
     select username,r.* from blog_user u left join  blog_remark r on u.uid = r.uid
     +-----------+------+-------------+------+------+------------+-----------+
@@ -148,7 +148,7 @@ select * from zzl_student where sno = monitor and class='95031';
   | replace(str, a, b)       | 将字符串str中的a更换为b                                      |
   | insert(str, x, y, instr) | 将字符串str从第x位置开始， y个字符长度的子字符串替换为字符串instr |
   | strcmp（s1, s2）         | 比较字符串s1, s2                                             |
-  | substring(str, x, y)     | 返回字符串str x位置开始y个字符长度的字符串                   |
+  | substring(str, x, y)     | 返回字符串str x位置开始y个字符长度的字符串（下标从1开始）    |
 
 - 日期函数
 
@@ -157,6 +157,7 @@ select * from zzl_student where sno = monitor and class='95031';
   | curdate()             | 得到当前日期                      |
   | curtime()             | 得到当前时间                      |
   | now()                 | 得到当前日期和时间                |
+  | date                  | 获取日期                          |
   | year(date)            | 得到date的年份                    |
   | month(date)           | 得到date的月份                    |
   | day(date)             | 得到date的天                      |
@@ -233,7 +234,7 @@ select * from zzl_student where sno = monitor and class='95031';
 - 修改密码
 
   ~~~
-  修改当前登录用户
+  修改当前登录用户(mysql5.7之前)
   set password = password('123456');
   			
   一般管理员可以修改任意用户密码
@@ -250,6 +251,7 @@ select * from zzl_student where sno = monitor and class='95031';
 
   ~~~
    grant 权限  on 数据库.表  to '用户名'@'服务器地址'
+   grant all on student.* o  '用户名'@'服务器地址'
     grant all on *.* to 'dd'@'localhost'
   	 *.* 所有数据库的所有表
   	 all 代表所有权限  
@@ -309,6 +311,9 @@ create  unique index 索引名 on 表名(字段 asc/desc) 默认asc升序
   - a
   - a,b
   - a,b,c
+- 不使用索引的:
+  - b
+  - b,c
 
 #### 全文索引（了解）
 
