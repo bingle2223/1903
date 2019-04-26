@@ -1,0 +1,1181 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| homwork            |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.01 sec)
+
+mysql> use homwork
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_homwork |
++-------------------+
+| course            |
+| grade             |
+| score             |
+| student           |
+| teacher           |
++-------------------+
+5 rows in set (0.00 sec)
+
+mysql> desc score;
++--------+---------+------+-----+---------+----------------+
+| Field  | Type    | Null | Key | Default | Extra          |
++--------+---------+------+-----+---------+----------------+
+| id     | int(11) | NO   | PRI | NULL    | auto_increment |
+| sid    | int(11) | YES  |     | NULL    |                |
+| cid    | int(11) | YES  |     | NULL    |                |
+| number | int(11) | YES  |     | 0       |                |
++--------+---------+------+-----+---------+----------------+
+4 rows in set (0.01 sec)
+
+mysql> select sid,avg(number) from score group by sid;
++------+-------------+
+| sid  | avg(number) |
++------+-------------+
+|    1 |     56.6667 |
+|    3 |     93.5000 |
+|    4 |     76.0000 |
++------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> select sid,avg(number) num from score group by sid having  num>60;
++------+---------+
+| sid  | num     |
++------+---------+
+|    3 | 93.5000 |
+|    4 | 76.0000 |
++------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select s.*,num,total from student s join (select count(*) num ,sum(number) total from score group by sid) tmp on s.sid=tmp.sid;
+ERROR 1054 (42S22): Unknown column 'tmp.sid' in 'on clause'
+mysql> select s.*,num,total from student s join (select sid, count(*) num ,sum(number) total from score group by sid) tmp on s.sid=tmp.sid;
++-----+-----------+------+------+-----+-------+
+| sid | name      | sex  | gid  | num | total |
++-----+-----------+------+------+-----+-------+
+|   1 | 唐笑      | 女   |    1 |   3 |   170 |
+|   3 | 岳云棚    | 男   |    3 |   2 |   187 |
+|   4 | 窦文涛    | 男   |    4 |   1 |    76 |
++-----+-----------+------+------+-----+-------+
+3 rows in set (0.01 sec)
+
+mysql> select * from course;
++-----+--------+------+
+| cid | name   | tid  |
++-----+--------+------+
+|   1 | 生物   |    1 |
+|   2 | 生物   |    1 |
+|   3 | 体育   |    1 |
+|   4 | 物理   |    2 |
++-----+--------+------+
+4 rows in set (0.00 sec)
+
+mysql> update course set name='物理' where cid=2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update course set name='体育' where cid=3;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 1  Changed: 0  Warnings: 0
+
+mysql> delete from course where cid=3;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from course;
++-----+--------+------+
+| cid | name   | tid  |
++-----+--------+------+
+|   1 | 生物   |    1 |
+|   2 | 物理   |    1 |
+|   4 | 物理   |    2 |
++-----+--------+------+
+3 rows in set (0.00 sec)
+
+mysql> update course set name='生物' where cid=2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from course;
++-----+--------+------+
+| cid | name   | tid  |
++-----+--------+------+
+|   1 | 生物   |    1 |
+|   2 | 生物   |    1 |
+|   4 | 物理   |    2 |
++-----+--------+------+
+3 rows in set (0.00 sec)
+
+mysql> update course set name='体育' where cid=2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from course;
++-----+--------+------+
+| cid | name   | tid  |
++-----+--------+------+
+|   1 | 生物   |    1 |
+|   2 | 体育   |    1 |
+|   4 | 物理   |    2 |
++-----+--------+------+
+3 rows in set (0.00 sec)
+
+mysql> update course set cid=3 where tid=2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from course;
++-----+--------+------+
+| cid | name   | tid  |
++-----+--------+------+
+|   1 | 生物   |    1 |
+|   2 | 体育   |    1 |
+|   3 | 物理   |    2 |
++-----+--------+------+
+3 rows in set (0.00 sec)
+
+mysql> select sid,count(*) from score group by sid;
++------+----------+
+| sid  | count(*) |
++------+----------+
+|    1 |        3 |
+|    3 |        2 |
+|    4 |        1 |
++------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select sid,count(*) n from score group by sid having n <(select count(*) from course);
++------+---+
+| sid  | n |
++------+---+
+|    3 | 2 |
+|    4 | 1 |
++------+---+
+2 rows in set (0.00 sec)
+
+mysql> select * from student;
++-----+-----------+------+------+
+| sid | name      | sex  | gid  |
++-----+-----------+------+------+
+|   1 | 唐笑      | 女   |    1 |
+|   2 | 张千      | 男   |    2 |
+|   3 | 岳云棚    | 男   |    3 |
+|   4 | 窦文涛    | 男   |    4 |
+|   5 | 刘家伟    | 女   |    2 |
+|   6 | 吴刚      | 男   |    3 |
+|   7 | 李萧萧    | 女   |    4 |
+|   8 | 李师师    | 女   |    3 |
++-----+-----------+------+------+
+8 rows in set (0.00 sec)
+
+mysql> select * from score where sid=1;
++----+------+------+--------+
+| id | sid  | cid  | number |
++----+------+------+--------+
+|  1 |    1 |    1 |     65 |
+|  2 |    1 |    2 |     59 |
+|  3 |    1 |    3 |     46 |
++----+------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from score;
++----+------+------+--------+
+| id | sid  | cid  | number |
++----+------+------+--------+
+|  1 |    1 |    1 |     65 |
+|  2 |    1 |    2 |     59 |
+|  3 |    1 |    3 |     46 |
+|  4 |    3 |    1 |    100 |
+|  5 |    3 |    3 |     87 |
+|  6 |    4 |    2 |     76 |
++----+------+------+--------+
+6 rows in set (0.00 sec)
+
+mysql> insert into score(sid,cid,number) values(2,1,78),(2,2,89);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from score;
++----+------+------+--------+
+| id | sid  | cid  | number |
++----+------+------+--------+
+|  1 |    1 |    1 |     65 |
+|  2 |    1 |    2 |     59 |
+|  3 |    1 |    3 |     46 |
+|  4 |    3 |    1 |    100 |
+|  5 |    3 |    3 |     87 |
+|  6 |    4 |    2 |     76 |
+|  7 |    2 |    1 |     78 |
+|  8 |    2 |    2 |     89 |
++----+------+------+--------+
+8 rows in set (0.00 sec)
+
+mysql> select sid,count(*) num from score group by sid;
++------+-----+
+| sid  | num |
++------+-----+
+|    1 |   3 |
+|    2 |   2 |
+|    3 |   2 |
+|    4 |   1 |
++------+-----+
+4 rows in set (0.00 sec)
+
+mysql> insert into score(sid,cid,number) values(4,1,90)
+    -> ;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select sid,count(*) num from score group by sid;
++------+-----+
+| sid  | num |
++------+-----+
+|    1 |   3 |
+|    2 |   2 |
+|    3 |   2 |
+|    4 |   2 |
++------+-----+
+4 rows in set (0.00 sec)
+
+mysql> select sid,cid from score where sid=2;
++------+------+
+| sid  | cid  |
++------+------+
+|    2 |    1 |
+|    2 |    2 |
++------+------+
+2 rows in set (0.00 sec)
+
+mysql> select * from (select * from score where sid!=2) t1 left join (select sid,cid from score where sid=2) t2 on t1.cid=t2.cid;
++----+------+------+--------+------+------+
+| id | sid  | cid  | number | sid  | cid  |
++----+------+------+--------+------+------+
+|  1 |    1 |    1 |     65 |    2 |    1 |
+|  4 |    3 |    1 |    100 |    2 |    1 |
+|  9 |    4 |    1 |     90 |    2 |    1 |
+|  2 |    1 |    2 |     59 |    2 |    2 |
+|  6 |    4 |    2 |     76 |    2 |    2 |
+|  3 |    1 |    3 |     46 | NULL | NULL |
+|  5 |    3 |    3 |     87 | NULL | NULL |
++----+------+------+--------+------+------+
+7 rows in set (0.00 sec)
+
+mysql> select * from (select * from score where sid!=2) t1 left join (select sid,cid from score where sid=2) t2 on t1.cid=t2.cid where sid is not null;
+ERROR 1052 (23000): Column 'sid' in where clause is ambiguous
+mysql> select * from (select * from score where sid!=2) t1 left join (select sid,cid from score where sid=2) t2 on t1.cid=t2.cid where t1.sid is not null;
++----+------+------+--------+------+------+
+| id | sid  | cid  | number | sid  | cid  |
++----+------+------+--------+------+------+
+|  1 |    1 |    1 |     65 |    2 |    1 |
+|  4 |    3 |    1 |    100 |    2 |    1 |
+|  9 |    4 |    1 |     90 |    2 |    1 |
+|  2 |    1 |    2 |     59 |    2 |    2 |
+|  6 |    4 |    2 |     76 |    2 |    2 |
+|  3 |    1 |    3 |     46 | NULL | NULL |
+|  5 |    3 |    3 |     87 | NULL | NULL |
++----+------+------+--------+------+------+
+7 rows in set (0.00 sec)
+
+mysql> select * from (select * from score where sid!=2) t1 left join (select sid,cid from score where sid=2) t2 on t1.cid=t2.cid where t2.sid is not null;
++----+------+------+--------+------+------+
+| id | sid  | cid  | number | sid  | cid  |
++----+------+------+--------+------+------+
+|  1 |    1 |    1 |     65 |    2 |    1 |
+|  2 |    1 |    2 |     59 |    2 |    2 |
+|  4 |    3 |    1 |    100 |    2 |    1 |
+|  6 |    4 |    2 |     76 |    2 |    2 |
+|  9 |    4 |    1 |     90 |    2 |    1 |
++----+------+------+--------+------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from (select * from score where sid!=2) t1 left join (select sid,cid from score where sid=2) t2 on t1.cid=t2.cid where t2.sid is not null order by t1.sid,t1.cid;
++----+------+------+--------+------+------+
+| id | sid  | cid  | number | sid  | cid  |
++----+------+------+--------+------+------+
+|  1 |    1 |    1 |     65 |    2 |    1 |
+|  2 |    1 |    2 |     59 |    2 |    2 |
+|  4 |    3 |    1 |    100 |    2 |    1 |
+|  9 |    4 |    1 |     90 |    2 |    1 |
+|  6 |    4 |    2 |     76 |    2 |    2 |
++----+------+------+--------+------+------+
+5 rows in set (0.00 sec)
+
+mysql>                                                                          
+
+mysql> show tables;
++-------------------+
+| Tables_in_homwork |
++-------------------+
+| course            |
+| grade             |
+| score             |
+| student           |
+| teacher           |
++-------------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from course c join score s on s.cid = c.cid ;
++-----+--------+------+----+------+------+--------+
+| cid | name   | tid  | id | sid  | cid  | number |
++-----+--------+------+----+------+------+--------+
+|   1 | 生物   |    1 |  1 |    1 |    1 |     65 |
+|   2 | 体育   |    1 |  2 |    1 |    2 |     59 |
+|   3 | 物理   |    2 |  3 |    1 |    3 |     46 |
+|   1 | 生物   |    1 |  4 |    3 |    1 |    100 |
+|   3 | 物理   |    2 |  5 |    3 |    3 |     87 |
+|   2 | 体育   |    1 |  6 |    4 |    2 |     76 |
+|   1 | 生物   |    1 |  7 |    2 |    1 |     78 |
+|   2 | 体育   |    1 |  8 |    2 |    2 |     89 |
+|   1 | 生物   |    1 |  9 |    4 |    1 |     90 |
++-----+--------+------+----+------+------+--------+
+9 rows in set (0.00 sec)
+
+mysql> create view v_c_s as 
+    -> select * from course c join score s on s.cid = c.cid ;
+ERROR 1060 (42S21): Duplicate column name 'cid'
+mysql> create view v_c_s as  select s.*,name,tid from course c join score s on s.cid = c.cid;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from v_c_s;
++----+------+------+--------+--------+------+
+| id | sid  | cid  | number | name   | tid  |
++----+------+------+--------+--------+------+
+|  1 |    1 |    1 |     65 | 生物   |    1 |
+|  2 |    1 |    2 |     59 | 体育   |    1 |
+|  3 |    1 |    3 |     46 | 物理   |    2 |
+|  4 |    3 |    1 |    100 | 生物   |    1 |
+|  5 |    3 |    3 |     87 | 物理   |    2 |
+|  6 |    4 |    2 |     76 | 体育   |    1 |
+|  7 |    2 |    1 |     78 | 生物   |    1 |
+|  8 |    2 |    2 |     89 | 体育   |    1 |
+|  9 |    4 |    1 |     90 | 生物   |    1 |
++----+------+------+--------+--------+------+
+9 rows in set (0.00 sec)
+
+mysql> select * from v_c_s where name = '生物';
++----+------+------+--------+--------+------+
+| id | sid  | cid  | number | name   | tid  |
++----+------+------+--------+--------+------+
+|  1 |    1 |    1 |     65 | 生物   |    1 |
+|  4 |    3 |    1 |    100 | 生物   |    1 |
+|  7 |    2 |    1 |     78 | 生物   |    1 |
+|  9 |    4 |    1 |     90 | 生物   |    1 |
++----+------+------+--------+--------+------+
+4 rows in set (0.00 sec)
+
+mysql> select * from v_c_s where name = '物理';
++----+------+------+--------+--------+------+
+| id | sid  | cid  | number | name   | tid  |
++----+------+------+--------+--------+------+
+|  3 |    1 |    3 |     46 | 物理   |    2 |
+|  5 |    3 |    3 |     87 | 物理   |    2 |
++----+------+------+--------+--------+------+
+2 rows in set (0.00 sec)
+
+mysql> select * from (select * from v_c_s where name = '生物') t1 join ( select * from v_c_s where name = '物理') t2 on t1.sid=t2.sid;
++----+------+------+--------+--------+------+----+------+------+--------+--------+------+
+| id | sid  | cid  | number | name   | tid  | id | sid  | cid  | number | name   | tid  |
++----+------+------+--------+--------+------+----+------+------+--------+--------+------+
+|  1 |    1 |    1 |     65 | 生物   |    1 |  3 |    1 |    3 |     46 | 物理   |    2 |
+|  4 |    3 |    1 |    100 | 生物   |    1 |  5 |    3 |    3 |     87 | 物理   |    2 |
++----+------+------+--------+--------+------+----+------+------+--------+--------+------+
+2 rows in set (0.00 sec)
+
+mysql> mysql> select * from (select * from v_c_s where name = '生物') t1 join ( select * from v_c_s where name = '2 on t1.sid=t2.sid where t1.number > t2.number;
++----+------+------+--------+--------+------+----+------+------+--------+--------+------+
+| id | sid  | cid  | number | name   | tid  | id | sid  | cid  | number | name   | tid  |
++----+------+------+--------+--------+------+----+------+------+--------+--------+------+
+|  1 |    1 |    1 |     65 | 生物   |    1 |  3 |    1 |    3 |     46 | 物理   |    2 |
+|  4 |    3 |    1 |    100 | 生物   |    1 |  5 |    3 |    3 |     87 | 物理   |    2 |
++----+------+------+--------+--------+------+----+------+------+--------+--------+------+
+2 rows in set (0.00 sec)
+
+mysql> select * from score;
++----+------+------+--------+
+| id | sid  | cid  | number |
++----+------+------+--------+
+|  1 |    1 |    1 |     65 |
+|  2 |    1 |    2 |     59 |
+|  3 |    1 |    3 |     46 |
+|  4 |    3 |    1 |    100 |
+|  5 |    3 |    3 |     87 |
+|  6 |    4 |    2 |     76 |
+|  7 |    2 |    1 |     78 |
+|  8 |    2 |    2 |     89 |
+|  9 |    4 |    1 |     90 |
++----+------+------+--------+
+9 rows in set (0.00 sec)
+
+mysql> select sid,avg(number) from score group by sid;
++------+-------------+
+| sid  | avg(number) |
++------+-------------+
+|    1 |     56.6667 |
+|    2 |     83.5000 |
+|    3 |     93.5000 |
+|    4 |     83.0000 |
++------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> select sid,avg(number) num from score group by sid having num>60;
++------+---------+
+| sid  | num     |
++------+---------+
+|    2 | 83.5000 |
+|    3 | 93.5000 |
+|    4 | 83.0000 |
++------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select * from score;
++----+------+------+--------+
+| id | sid  | cid  | number |
++----+------+------+--------+
+|  1 |    1 |    1 |     65 |
+|  2 |    1 |    2 |     59 |
+|  3 |    1 |    3 |     46 |
+|  4 |    3 |    1 |    100 |
+|  5 |    3 |    3 |     87 |
+|  6 |    4 |    2 |     76 |
+|  7 |    2 |    1 |     78 |
+|  8 |    2 |    2 |     89 |
+|  9 |    4 |    1 |     90 |
++----+------+------+--------+
+9 rows in set (0.00 sec)
+
+mysql> select sid,count(cid) n,sum(number) from score group by sid;
++------+---+-------------+
+| sid  | n | sum(number) |
++------+---+-------------+
+|    1 | 3 |         170 |
+|    2 | 2 |         167 |
+|    3 | 2 |         187 |
+|    4 | 2 |         166 |
++------+---+-------------+
+4 rows in set (0.00 sec)
+
+mysql> select sid,count(cid) n,sum(number) m from score group by sid;
++------+---+------+
+| sid  | n | m    |
++------+---+------+
+|    1 | 3 |  170 |
+|    2 | 2 |  167 |
+|    3 | 2 |  187 |
+|    4 | 2 |  166 |
++------+---+------+
+4 rows in set (0.01 sec)
+
+mysql> select * from student s join (select sid,count(cid) n,sum(number) m from score group by sid) t on s.sid=t.sid;
++-----+-----------+------+------+------+---+------+
+| sid | name      | sex  | gid  | sid  | n | m    |
++-----+-----------+------+------+------+---+------+
+|   1 | 唐笑      | 女   |    1 |    1 | 3 |  170 |
+|   2 | 张千      | 男   |    2 |    2 | 2 |  167 |
+|   3 | 岳云棚    | 男   |    3 |    3 | 2 |  187 |
+|   4 | 窦文涛    | 男   |    4 |    4 | 2 |  166 |
++-----+-----------+------+------+------+---+------+
+4 rows in set (0.00 sec)
+
+mysql> select sid,name,n,m from student s join (select sid,count(cid) n,sum(number) m from score group by sid) t on s.sid=t.sid;
+ERROR 1052 (23000): Column 'sid' in field list is ambiguous
+mysql> select s.sid,name,n,m from student s join (select sid,count(cid) n,sum(number) m from score group by sid) t on s.sid=t.sid;
++-----+-----------+---+------+
+| sid | name      | n | m    |
++-----+-----------+---+------+
+|   1 | 唐笑      | 3 |  170 |
+|   2 | 张千      | 2 |  167 |
+|   3 | 岳云棚    | 2 |  187 |
+|   4 | 窦文涛    | 2 |  166 |
++-----+-----------+---+------+
+4 rows in set (0.00 sec)
+
+mysql> select * from teacher;
++-----+-----------+
+| tid | name      |
++-----+-----------+
+|   1 | 陈坤      |
+|   2 | 王天和    |
+|   3 | 汪峰      |
+|   4 | 郑家先    |
+|   5 | 钱三强    |
+|   6 | 王宁      |
+|   7 | 唐三      |
++-----+-----------+
+7 rows in set (0.00 sec)
+
+mysql> select count(tid) from teacher where name like '王%';
++------------+
+| count(tid) |
++------------+
+|          2 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select * from course c join teacher t on c.tid=t.tid;
++-----+--------+------+-----+-----------+
+| cid | name   | tid  | tid | name      |
++-----+--------+------+-----+-----------+
+|   1 | 生物   |    1 |   1 | 陈坤      |
+|   2 | 体育   |    1 |   1 | 陈坤      |
+|   3 | 物理   |    2 |   2 | 王天和    |
++-----+--------+------+-----+-----------+
+3 rows in set (0.01 sec)
+
+mysql> select * from teacher;
++-----+-----------+
+| tid | name      |
++-----+-----------+
+|   1 | 陈坤      |
+|   2 | 王天和    |
+|   3 | 汪峰      |
+|   4 | 郑家先    |
+|   5 | 钱三强    |
+|   6 | 王宁      |
+|   7 | 唐三      |
++-----+-----------+
+7 rows in set (0.00 sec)
+
+mysql> select * from course;
++-----+--------+------+
+| cid | name   | tid  |
++-----+--------+------+
+|   1 | 生物   |    1 |
+|   2 | 体育   |    1 |
+|   3 | 物理   |    2 |
++-----+--------+------+
+3 rows in set (0.00 sec)
+
+mysql> update course set tid=3 where cid=2;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from course;
++-----+--------+------+
+| cid | name   | tid  |
++-----+--------+------+
+|   1 | 生物   |    1 |
+|   2 | 体育   |    3 |
+|   3 | 物理   |    2 |
++-----+--------+------+
+3 rows in set (0.00 sec)
+
+mysql> select * from course c join teacher t on c.tid=t.tid;
++-----+--------+------+-----+-----------+
+| cid | name   | tid  | tid | name      |
++-----+--------+------+-----+-----------+
+|   1 | 生物   |    1 |   1 | 陈坤      |
+|   2 | 体育   |    3 |   3 | 汪峰      |
+|   3 | 物理   |    2 |   2 | 王天和    |
++-----+--------+------+-----+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from course c join teacher t on c.tid=t.tid join score s on s.cid = c.cid;
++-----+--------+------+-----+-----------+----+------+------+--------+
+| cid | name   | tid  | tid | name      | id | sid  | cid  | number |
++-----+--------+------+-----+-----------+----+------+------+--------+
+|   1 | 生物   |    1 |   1 | 陈坤      |  1 |    1 |    1 |     65 |
+|   2 | 体育   |    3 |   3 | 汪峰      |  2 |    1 |    2 |     59 |
+|   3 | 物理   |    2 |   2 | 王天和    |  3 |    1 |    3 |     46 |
+|   1 | 生物   |    1 |   1 | 陈坤      |  4 |    3 |    1 |    100 |
+|   3 | 物理   |    2 |   2 | 王天和    |  5 |    3 |    3 |     87 |
+|   2 | 体育   |    3 |   3 | 汪峰      |  6 |    4 |    2 |     76 |
+|   1 | 生物   |    1 |   1 | 陈坤      |  7 |    2 |    1 |     78 |
+|   2 | 体育   |    3 |   3 | 汪峰      |  8 |    2 |    2 |     89 |
+|   1 | 生物   |    1 |   1 | 陈坤      |  9 |    4 |    1 |     90 |
++-----+--------+------+-----+-----------+----+------+------+--------+
+9 rows in set (0.00 sec)
+
+mysql> select * from course c join teacher t on c.tid=t.tid join score s on s.cid = c.cid where name <>'汪峰';
+ERROR 1052 (23000): Column 'name' in where clause is ambiguous
+mysql> select * from course c join teacher t on c.tid=t.tid join score s on s.cid = c.cid where t.name <>'汪峰';
++-----+--------+------+-----+-----------+----+------+------+--------+
+| cid | name   | tid  | tid | name      | id | sid  | cid  | number |
++-----+--------+------+-----+-----------+----+------+------+--------+
+|   1 | 生物   |    1 |   1 | 陈坤      |  1 |    1 |    1 |     65 |
+|   3 | 物理   |    2 |   2 | 王天和    |  3 |    1 |    3 |     46 |
+|   1 | 生物   |    1 |   1 | 陈坤      |  4 |    3 |    1 |    100 |
+|   3 | 物理   |    2 |   2 | 王天和    |  5 |    3 |    3 |     87 |
+|   1 | 生物   |    1 |   1 | 陈坤      |  7 |    2 |    1 |     78 |
+|   1 | 生物   |    1 |   1 | 陈坤      |  9 |    4 |    1 |     90 |
++-----+--------+------+-----+-----------+----+------+------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from course c join teacher t on c.tid=t.tid join score s on s.cid = c.cid where t.name ='汪峰';
++-----+--------+------+-----+--------+----+------+------+--------+
+| cid | name   | tid  | tid | name   | id | sid  | cid  | number |
++-----+--------+------+-----+--------+----+------+------+--------+
+|   2 | 体育   |    3 |   3 | 汪峰   |  2 |    1 |    2 |     59 |
+|   2 | 体育   |    3 |   3 | 汪峰   |  6 |    4 |    2 |     76 |
+|   2 | 体育   |    3 |   3 | 汪峰   |  8 |    2 |    2 |     89 |
++-----+--------+------+-----+--------+----+------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select  sid from course c join teacher t on c.tid=t.tid join score s on s.cid = c.cid where t.name ='汪峰';
++------+
+| sid  |
++------+
+|    1 |
+|    4 |
+|    2 |
++------+
+3 rows in set (0.00 sec)
+
+mysql> select sid,name from student where sid not in ( select  sid from course c join teacher t on c.tid=t.tid join score s on s.cid = c.cid where t.name ='汪峰');
++-----+-----------+
+| sid | name      |
++-----+-----------+
+|   3 | 岳云棚    |
+|   5 | 刘家伟    |
+|   6 | 吴刚      |
+|   7 | 李萧萧    |
+|   8 | 李师师    |
++-----+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from score where cid=1 and cid=2;
+Empty set (0.00 sec)
+
+mysql> select * from score where cid=1 or cid=2;
++----+------+------+--------+
+| id | sid  | cid  | number |
++----+------+------+--------+
+|  1 |    1 |    1 |     65 |
+|  2 |    1 |    2 |     59 |
+|  4 |    3 |    1 |    100 |
+|  6 |    4 |    2 |     76 |
+|  7 |    2 |    1 |     78 |
+|  8 |    2 |    2 |     89 |
+|  9 |    4 |    1 |     90 |
++----+------+------+--------+
+7 rows in set (0.00 sec)
+
+mysql> select sid,cid,number from score where cid=1 or cid=2;
++------+------+--------+
+| sid  | cid  | number |
++------+------+--------+
+|    1 |    1 |     65 |
+|    1 |    2 |     59 |
+|    3 |    1 |    100 |
+|    4 |    2 |     76 |
+|    2 |    1 |     78 |
+|    2 |    2 |     89 |
+|    4 |    1 |     90 |
++------+------+--------+
+7 rows in set (0.00 sec)
+
+mysql> select sid,count(sid) from score where cid=1 or cid=2 group by sid ;
++------+------------+
+| sid  | count(sid) |
++------+------------+
+|    1 |          2 |
+|    2 |          2 |
+|    3 |          1 |
+|    4 |          2 |
++------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select sid,count(sid) from score where cid=1 or cid=2 group by sid  having count(sid)=2;
++------+------------+
+| sid  | count(sid) |
++------+------------+
+|    1 |          2 |
+|    2 |          2 |
+|    4 |          2 |
++------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from teacher t,course c,score s where t.tid=c.tid and c.cid=s.cid;
++-----+-----------+-----+--------+------+----+------+------+--------+
+| tid | name      | cid | name   | tid  | id | sid  | cid  | number |
++-----+-----------+-----+--------+------+----+------+------+--------+
+|   1 | 陈坤      |   1 | 生物   |    1 |  1 |    1 |    1 |     65 |
+|   3 | 汪峰      |   2 | 体育   |    3 |  2 |    1 |    2 |     59 |
+|   2 | 王天和    |   3 | 物理   |    2 |  3 |    1 |    3 |     46 |
+|   1 | 陈坤      |   1 | 生物   |    1 |  4 |    3 |    1 |    100 |
+|   2 | 王天和    |   3 | 物理   |    2 |  5 |    3 |    3 |     87 |
+|   3 | 汪峰      |   2 | 体育   |    3 |  6 |    4 |    2 |     76 |
+|   1 | 陈坤      |   1 | 生物   |    1 |  7 |    2 |    1 |     78 |
+|   3 | 汪峰      |   2 | 体育   |    3 |  8 |    2 |    2 |     89 |
+|   1 | 陈坤      |   1 | 生物   |    1 |  9 |    4 |    1 |     90 |
++-----+-----------+-----+--------+------+----+------+------+--------+
+9 rows in set (0.00 sec)
+
+mysql> select s.sid from teacher t,course c,score s where t.tid=c.tid and c.cid=s.cid and name='汪峰';
+ERROR 1052 (23000): Column 'name' in where clause is ambiguous
+mysql> select s.sid from teacher t,course c,score s where t.tid=c.tid and c.cid=s.cid and c.name='汪峰';
+Empty set (0.00 sec)
+
+mysql> select s.sid from teacher t,course c,score s where t.tid=c.tid and c.cid=s.cid and t.name='汪峰';
++------+
+| sid  |
++------+
+|    1 |
+|    4 |
+|    2 |
++------+
+3 rows in set (0.00 sec)
+
+mysql> select sid,count(sid) from score where cid=1 or cid=2 group by sid  having count(sid)=2;
++------+------------+
+| sid  | count(sid) |
++------+------------+
+|    1 |          2 |
+|    2 |          2 |
+|    4 |          2 |
++------+------------+
+3 rows in set (0.00 sec)
+
+mysql> create view v_x_1 as
+    -> select sid,count(sid) from score where cid=1 or cid=2 group by sid  having count(sid)=2;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from v_x_1;
++------+------------+
+| sid  | count(sid) |
++------+------------+
+|    1 |          2 |
+|    2 |          2 |
+|    4 |          2 |
++------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from (select * from score where cid=2) t1 join (select * from score where cid=1) t2 on t1.id=t2.id; 
+Empty set (0.00 sec)
+
+mysql> select * from (select * from score where cid=2) t1 join (select * from score where cid=1) t2 on t1.sid=t2.sid;
++----+------+------+--------+----+------+------+--------+
+| id | sid  | cid  | number | id | sid  | cid  | number |
++----+------+------+--------+----+------+------+--------+
+|  2 |    1 |    2 |     59 |  1 |    1 |    1 |     65 |
+|  8 |    2 |    2 |     89 |  7 |    2 |    1 |     78 |
+|  6 |    4 |    2 |     76 |  9 |    4 |    1 |     90 |
++----+------+------+--------+----+------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql> select * from (select * from score where cid=2) t1 join (select * from score where cid=1) t2 on t1.sid=t2.sid where t1.number > t2.number;
++----+------+------+--------+----+------+------+--------+
+| id | sid  | cid  | number | id | sid  | cid  | number |
++----+------+------+--------+----+------+------+--------+
+|  8 |    2 |    2 |     89 |  7 |    2 |    1 |     78 |
++----+------+------+--------+----+------+------+--------+
+1 row in set (0.00 sec)
+
+mysql> select * from student s1 join score s2 on s1.sid=s2.sid;                                                    +-----+-----------+------+------+----+------+------+--------+
+| sid | name      | sex  | gid  | id | sid  | cid  | number |
++-----+-----------+------+------+----+------+------+--------+
+|   1 | 唐笑      | 女   |    1 |  1 |    1 |    1 |     65 |
+|   1 | 唐笑      | 女   |    1 |  2 |    1 |    2 |     59 |
+|   1 | 唐笑      | 女   |    1 |  3 |    1 |    3 |     46 |
+|   3 | 岳云棚    | 男   |    3 |  4 |    3 |    1 |    100 |
+|   3 | 岳云棚    | 男   |    3 |  5 |    3 |    3 |     87 |
+|   4 | 窦文涛    | 男   |    4 |  6 |    4 |    2 |     76 |
+|   2 | 张千      | 男   |    2 |  7 |    2 |    1 |     78 |
+|   2 | 张千      | 男   |    2 |  8 |    2 |    2 |     89 |
+|   4 | 窦文涛    | 男   |    4 |  9 |    4 |    1 |     90 |
++-----+-----------+------+------+----+------+------+--------+
+9 rows in set (0.00 sec)
+
+mysql> select * from student s1 join score s2 on s1.sid=s2.sid where number <60;
++-----+--------+------+------+----+------+------+--------+
+| sid | name   | sex  | gid  | id | sid  | cid  | number |
++-----+--------+------+------+----+------+------+--------+
+|   1 | 唐笑   | 女   |    1 |  2 |    1 |    2 |     59 |
+|   1 | 唐笑   | 女   |    1 |  3 |    1 |    3 |     46 |
++-----+--------+------+------+----+------+------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select s1.sid,name from student s1 join score s2 on s1.sid=s2.sid where number <60;
++-----+--------+
+| sid | name   |
++-----+--------+
+|   1 | 唐笑   |
+|   1 | 唐笑   |
++-----+--------+
+2 rows in set (0.00 sec)
+
+mysql> select distinct s1.sid,name from student s1 join score s2 on s1.sid=s2.sid where number <60;
++-----+--------+
+| sid | name   |
++-----+--------+
+|   1 | 唐笑   |
++-----+--------+
+1 row in set (0.00 sec)
+
+mysql> select count(*) from course;
++----------+
+| count(*) |
++----------+
+|        3 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select sid ,count(*) num from score group by sid;
++------+-----+
+| sid  | num |
++------+-----+
+|    1 |   3 |
+|    2 |   2 |
+|    3 |   2 |
+|    4 |   2 |
++------+-----+
+4 rows in set (0.00 sec)
+
+mysql> select sid ,count(*) num from score group by sid having num <(select count(*) from course);
++------+-----+
+| sid  | num |
++------+-----+
+|    2 |   2 |
+|    3 |   2 |
+|    4 |   2 |
++------+-----+
+3 rows in set (0.01 sec)
+
+mysql> select cid from score where sid=1;
++------+
+| cid  |
++------+
+|    1 |
+|    2 |
+|    3 |
++------+
+3 rows in set (0.01 sec)
+
+mysql> select sid from score where cid in (select cid from score where sid=1);
++------+
+| sid  |
++------+
+|    1 |
+|    3 |
+|    2 |
+|    4 |
+|    1 |
+|    4 |
+|    2 |
+|    1 |
+|    3 |
++------+
+9 rows in set (0.01 sec)
+
+mysql> select distinct sid from score where cid in (select cid from score where sid=1);
++------+
+| sid  |
++------+
+|    1 |
+|    3 |
+|    2 |
+|    4 |
++------+
+4 rows in set (0.00 sec)
+
+mysql> select sid,cid from score where sid=2;
++------+------+
+| sid  | cid  |
++------+------+
+|    2 |    1 |
+|    2 |    2 |
++------+------+
+2 rows in set (0.00 sec)
+
+mysql> select * from score where sid <> 2;
++----+------+------+--------+
+| id | sid  | cid  | number |
++----+------+------+--------+
+|  1 |    1 |    1 |     65 |
+|  2 |    1 |    2 |     59 |
+|  3 |    1 |    3 |     46 |
+|  4 |    3 |    1 |    100 |
+|  5 |    3 |    3 |     87 |
+|  6 |    4 |    2 |     76 |
+|  9 |    4 |    1 |     90 |
++----+------+------+--------+
+7 rows in set (0.00 sec)
+
+mysql> select * from (select * from score where sid <> 2) t1 join (select sid,cid from score where sid=2) t2 on t1.cid=t2.cid;
++----+------+------+--------+------+------+
+| id | sid  | cid  | number | sid  | cid  |
++----+------+------+--------+------+------+
+|  1 |    1 |    1 |     65 |    2 |    1 |
+|  2 |    1 |    2 |     59 |    2 |    2 |
+|  4 |    3 |    1 |    100 |    2 |    1 |
+|  6 |    4 |    2 |     76 |    2 |    2 |
+|  9 |    4 |    1 |     90 |    2 |    1 |
++----+------+------+--------+------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from (select * from score where sid <> 2) t1 left join (select sid,cid from score where sid=2) t2 on t1.cid=t2.cid;
++----+------+------+--------+------+------+
+| id | sid  | cid  | number | sid  | cid  |
++----+------+------+--------+------+------+
+|  1 |    1 |    1 |     65 |    2 |    1 |
+|  4 |    3 |    1 |    100 |    2 |    1 |
+|  9 |    4 |    1 |     90 |    2 |    1 |
+|  2 |    1 |    2 |     59 |    2 |    2 |
+|  6 |    4 |    2 |     76 |    2 |    2 |
+|  3 |    1 |    3 |     46 | NULL | NULL |
+|  5 |    3 |    3 |     87 | NULL | NULL |
++----+------+------+--------+------+------+
+7 rows in set (0.01 sec)
+
+mysql> select * from (select * from score where sid <> 2) t1  join (select sid,cid from score where sid=2) t2 on t1.cid=t2.cid;
++----+------+------+--------+------+------+
+| id | sid  | cid  | number | sid  | cid  |
++----+------+------+--------+------+------+
+|  1 |    1 |    1 |     65 |    2 |    1 |
+|  2 |    1 |    2 |     59 |    2 |    2 |
+|  4 |    3 |    1 |    100 |    2 |    1 |
+|  6 |    4 |    2 |     76 |    2 |    2 |
+|  9 |    4 |    1 |     90 |    2 |    1 |
++----+------+------+--------+------+------+
+5 rows in set (0.00 sec)
+
+mysql> select t1.sid,t1.cid,t2.* from (select * from score where sid <> 2) t1  join (select sid,cid from score where sid=2) t2 on t1.cid=t2.cid;
++------+------+------+------+
+| sid  | cid  | sid  | cid  |
++------+------+------+------+
+|    1 |    1 |    2 |    1 |
+|    1 |    2 |    2 |    2 |
+|    3 |    1 |    2 |    1 |
+|    4 |    2 |    2 |    2 |
+|    4 |    1 |    2 |    1 |
++------+------+------+------+
+5 rows in set (0.00 sec)
+
+mysql> select distinct t1.sid,t1.cid,t2.* from (select * from score where sid <> 2) t1  join (select sid,cid from score where sid=2) t2 on t1.cid=t2.cid;
++------+------+------+------+
+| sid  | cid  | sid  | cid  |
++------+------+------+------+
+|    1 |    1 |    2 |    1 |
+|    1 |    2 |    2 |    2 |
+|    3 |    1 |    2 |    1 |
+|    4 |    2 |    2 |    2 |
+|    4 |    1 |    2 |    1 |
++------+------+------+------+
+5 rows in set (0.00 sec)
+
+mysql> select distinct t1.sid,t1.cid,t2.cid from (select * from score where sid <> 2) t1  join (select sid,cid from score where sid=2) t2 on t1.cid=t2.cid;
++------+------+------+
+| sid  | cid  | cid  |
++------+------+------+
+|    1 |    1 |    1 |
+|    1 |    2 |    2 |
+|    3 |    1 |    1 |
+|    4 |    2 |    2 |
+|    4 |    1 |    1 |
++------+------+------+
+5 rows in set (0.00 sec)
+
+mysql> select distinct t1.sid ,count(*) n from (select * from score where sid <> 2) t1  join (select sid,cid from score where sid=2) t2 on t1.cid=t2.cid group by t1.sid ;
++------+---+
+| sid  | n |
++------+---+
+|    1 | 2 |
+|    3 | 1 |
+|    4 | 2 |
++------+---+
+3 rows in set (0.00 sec)
+
+mysql> select distinct t1.sid ,count(*) n from (select * from score where sid <> 2) t1  join (select sid,cid from score where sid=2) t2 on t1.cid=t2.cid group by t1.sid having n = (select count(*) from score where sid=2);
++------+---+
+| sid  | n |
++------+---+
+|    1 | 2 |
+|    4 | 2 |
++------+---+
+2 rows in set (0.00 sec)
+
+mysql> select distinct t1.sid ,count(*) n from (select * from score where sid <> 2) t1 left  join (select sid,cid from score where sid=2) t2 on t1.cid=t2.cid group by t1.sid having n = (select count(*) from score where sid=2);
++------+---+
+| sid  | n |
++------+---+
+|    3 | 2 |
+|    4 | 2 |
++------+---+
+2 rows in set (0.00 sec)
+
+mysql> select * from (select * from score where sid <> 2)  t1 left  join (select sid,cid from score where sid=2) t2 on t.cid = t2.cid;
+ERROR 1054 (42S22): Unknown column 't.cid' in 'on clause'
+mysql> select * from (select * from score where sid <> 2)  t1 left  join (select sid,cid from score where sid=2) t2 on t1.cid = t2.cid;
++----+------+------+--------+------+------+
+| id | sid  | cid  | number | sid  | cid  |
++----+------+------+--------+------+------+
+|  1 |    1 |    1 |     65 |    2 |    1 |
+|  4 |    3 |    1 |    100 |    2 |    1 |
+|  9 |    4 |    1 |     90 |    2 |    1 |
+|  2 |    1 |    2 |     59 |    2 |    2 |
+|  6 |    4 |    2 |     76 |    2 |    2 |
+|  3 |    1 |    3 |     46 | NULL | NULL |
+|  5 |    3 |    3 |     87 | NULL | NULL |
++----+------+------+--------+------+------+
+7 rows in set (0.00 sec)
+
+mysql> select t1.sid ,count(*) from (select * from score where sid <> 2)  t1 left  join (select sid,cid from score where sid=2) t2 on t1.cid = t2.cid group by t1.sid;
++------+----------+
+| sid  | count(*) |
++------+----------+
+|    1 |        3 |
+|    3 |        2 |
+|    4 |        2 |
++------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select t1.sid ,count(*) from (select * from score where sid <> 2)  t1 left  join (select sid,cid from score mysql> select * from (select * from score where cid=2) t1 join (select * from score where cid=1) t2 on t1.sid=t2.sid;
++----+------+------+--------+----+------+------+--------+
+| id | sid  | cid  | number | id | sid  | cid  | number |
++----+------+------+--------+----+------+------+--------+
+|  2 |    1 |    2 |     59 |  1 |    1 |    1 |     65 |
+|  8 |    2 |    2 |     89 |  7 |    2 |    1 |     78 |
+|  6 |    4 |    2 |     76 |  9 |    4 |    1 |     90 |
++----+------+------+--------+----+------+------+--------+
+3 rows in set (0.00 sec)
+
+mysql>  select distinct t1.sid ,count(*) n from (select * from score where sid <> 2) t1  join (select sid,cid from score where sid=2) t2 on t1.cid=t2.cid group by t1.sid
+    -> ;
++------+---+
+| sid  | n |
++------+---+
+|    1 | 2 |
+|    3 | 1 |
+|    4 | 2 |
++------+---+
+3 rows in set (0.00 sec)
+
+mysql>  select distinct t1.sid ,count(*) n from (select * from score where sid <> 2) t1  join (select sid,cid from score where sid=2) t2 on t1.cid=t2.cid ;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 't1.sid'; this is incompatible with sql_mode=only_full_group_by
+mysql>  select * from (select * from score where sid <> 2) t1  join (select sid,cid from score where sid=2) t2 on t1.cid=t2.cid ;
++----+------+------+--------+------+------+
+| id | sid  | cid  | number | sid  | cid  |
++----+------+------+--------+------+------+
+|  1 |    1 |    1 |     65 |    2 |    1 |
+|  2 |    1 |    2 |     59 |    2 |    2 |
+|  4 |    3 |    1 |    100 |    2 |    1 |
+|  6 |    4 |    2 |     76 |    2 |    2 |
+|  9 |    4 |    1 |     90 |    2 |    1 |
++----+------+------+--------+------+------+
+5 rows in set (0.00 sec)
+
+mysql>  select * from (select * from score where sid <> 2) t1  join (select sid,cid from score where sid=2) t2 on t1.cid=t2.cid where t1.sid in (select count(*) num from score group by sid having num = (select count(*) from score where sid=2) );
+Empty set (0.01 sec)
+
+mysql> select count(*) from score where sid=2;
++----------+
+| count(*) |
++----------+
+|        2 |
++----------+
+1 row in set (0.00 sec)
+
+mysql>  select * from (select * from score where sid <> 2) t1  join (select sid,cid from score where sid=2) t2 on t1.cid=t2.cid where t1.sid in (select sid num from score group by sid having num = (select count(*) from score where sid=2) );
+Empty set (0.00 sec)
+
+mysql> select sid from score group by sid having count(*) = (select count(*) from score where sid=2)
+    -> ;
++------+
+| sid  |
++------+
+|    2 |
+|    3 |
+|    4 |
++------+
+3 rows in set (0.00 sec)
+
+mysql> select sid from score where sid<>2 group by sid having count(*) = (select count(*) from score where sid=2)
+    -> ;
++------+
+| sid  |
++------+
+|    3 |
+|    4 |
++------+
+2 rows in set (0.00 sec)
+
+mysql>  select * from (select * from score where sid <> 2) t1  join (select sid,cid from score where sid=2) t2 on t1.cid=t2.cid where t1.sid in (select sid num from score group by sid having num = (select count(*) from score where sid=2) );
+Empty set (0.00 sec)
+
+mysql>  select * from (select * from score where sid <> 2) t1  join (select sid,cid from score where sid=2) t2 on t1.cid=t2.cid where t1.sid in (select sid from score where sid<>2 group by sid having count(*) = (select count(*) from score where sid=2) );
++----+------+------+--------+------+------+
+| id | sid  | cid  | number | sid  | cid  |
++----+------+------+--------+------+------+
+|  4 |    3 |    1 |    100 |    2 |    1 |
+|  6 |    4 |    2 |     76 |    2 |    2 |
+|  9 |    4 |    1 |     90 |    2 |    1 |
++----+------+------+--------+------+------+
+3 rows in set (0.00 sec)
+
+mysql>  select * from (select * from score where sid <> 2) t1  join (select sid,cid from score where sid=2) t2 on t1.cid=t2.cid where t1.sid in (select sid from score where sid<>2 group by sid having count(*) = (select count(*) from score where sid=2) ) group by t1.sid having count(*) = (select count(*) from score where sid=2);
+ERROR 1055 (42000): Expression #1 of SELECT list is not in GROUP BY clause and contains nonaggregated column 't1.id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql>  select t1.sid,count(*) from (select * from score where sid <> 2) t1  join (select sid,cid from score where sid=2) t2 on t1.cid=t2.cid where t1.sid in (select sid from score where sid<>2 group by sid having count(*) = (select count(*) from score where sid=2) ) group by t1.sid having count(*) = (select count(*) from score where sid=2);
++------+----------+
+| sid  | count(*) |
++------+----------+
+|    4 |        2 |
++------+----------+
+1 row in set (0.00 sec)
+
+mysql> select sid,count(*) num from score where sid<>2;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'homwork.score.sid'; this is incompatible with sql_mode=only_full_group_by
+mysql> select sid,count(*) num from score where sid<>2 group by sid;
++------+-----+
+| sid  | num |
++------+-----+
+|    1 |   3 |
+|    3 |   2 |
+|    4 |   2 |
++------+-----+
+3 rows in set (0.00 sec)
+
+mysql> select sid,count(*) num from score where sid<>2 group by sid having num = (select count(*) from score where sid=2);
++------+-----+
+| sid  | num |
++------+-----+
+|    3 |   2 |
+|    4 |   2 |
++------+-----+
+2 rows in set (0.00 sec)
+
+mysql> select * from score where sid<>2;
++----+------+------+--------+
+| id | sid  | cid  | number |
++----+------+------+--------+
+|  1 |    1 |    1 |     65 |
+|  2 |    1 |    2 |     59 |
+|  3 |    1 |    3 |     46 |
+|  4 |    3 |    1 |    100 |
+|  5 |    3 |    3 |     87 |
+|  6 |    4 |    2 |     76 |
+|  9 |    4 |    1 |     90 |
++----+------+------+--------+
+7 rows in set (0.00 sec)
+
+mysql> select sid,cid from score where sid<>2;
++------+------+
+| sid  | cid  |
++------+------+
+|    1 |    1 |
+|    1 |    2 |
+|    1 |    3 |
+|    3 |    1 |
+|    3 |    3 |
+|    4 |    2 |
+|    4 |    1 |
++------+------+
+7 rows in set (0.00 sec)
+
+mysql> select sid,cid from score where sid=2;
++------+------+
+| sid  | cid  |
++------+------+
+|    2 |    1 |
+|    2 |    2 |
++------+------+
+2 rows in set (0.00 sec)
+
+mysql> select * from () select sid,count(*) num from score where sid<>2 group by sid having num = (select count(*) from score where sid=2)
+
