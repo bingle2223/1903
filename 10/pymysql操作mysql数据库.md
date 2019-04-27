@@ -116,7 +116,9 @@ except Exception as e:
 - 数据库model类的核心是连贯操作和方法的无顺序调用
 
   ~~~
-  db.where('username="admin"').table('blog_user').field('username,password').select()
+  db.where('username="admin"').field('username,password').select()
+  db.field('uid,name').where("uid=1").orderby('name des').select()
+  db.field('uid,name').orderby('name des').where("uid=1").select()
   # select usenrame,password from blog_user where username='admin'
   # sql = "SELECT {fields} FROM {table} {where} {groupby} {having} {orderby} {limit}".format()
   ~~~

@@ -1,0 +1,14 @@
+删除mysql的数据文件
+sudo rm /var/lib/mysql/ -R
+
+删除mysql的配置文件
+sudo rm /etc/mysql/ -R
+
+自动卸载mysql（包括server和client）
+sudo apt-get autoremove mysql* --purge 
+sudo apt-get remove apparmor
+
+检查是否卸载干净
+dpkg -l | grep mysql # 若没有返回，说明已完成卸载
+
+
