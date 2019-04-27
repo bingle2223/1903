@@ -8,6 +8,7 @@ class DBHelper:
     def __init__(self,table):
         self.table = table  # 表名
         self.conn = pymysql.Connect(**settings.db)    # 链接数据库
+        # pymysql.cursors.DictCursor 返回的数据格式：[{'sid': 1, 'name': '唐笑'}, {'sid': 2, 'name': '张千'}]
         self.cursor = self.conn.cursor(pymysql.cursors.DictCursor)  #游标
         self.__init_options()  #初始化查询参数
         self.sql = ''
@@ -45,7 +46,7 @@ class DBHelper:
     def having(self,**kwargs):
         """
 
-        :param kwargs: num__gt=2  => num > 2
+        :param kwargs: num__gt=2  => num > 2 [num,'gt']    num=2  [num]
         :return:
         """
         if len(kwargs) <= 0:
@@ -59,7 +60,7 @@ class DBHelper:
             'ge':'>=',
             'lt':'<',
             'le':'<=',
-            'neq':'!='
+            'neq':'!=',
         }
         # 拼接条件
         for key,value in kwargs.items():
@@ -92,11 +93,13 @@ class DBHelper:
     # 字段列表
     def fields(self,*args):
         args = [str(value) for value in args]
+        # ['uid','name','sex']
+        # "uid,name,sex"
         self.options['fields'] = ','.join(args)
         return self
     def where(self,**kwargs):
         """
-        {'sno':'105','sex':'男'}
+        {'sno':'105','sex':'男','sid':1}
         :param kwargs:
         :return:
         """
@@ -104,7 +107,7 @@ class DBHelper:
             return self
 
         # 有where条件
-        if 'where' in self.options['where']:
+        if self.options['where']:
             self.options['where'] += ' and '  #默认是and连接
         else:  # where条件为空
             self.options['where'] = " where "
@@ -115,12 +118,13 @@ class DBHelper:
             else:
                 self.options['where'] += key + " = " + str(value) + " and "
         self.options['where'] = self.options['where'].rstrip("and ")  # 去掉末尾的and
-        print(self.options['where'])
+
         return self
 
     def select(self):
         sql = "SELECT {fields} FROM {table} {where}  {groupby} {having}  {orderby} {limit}"
         sql = sql.format(**self.options)
+        print(self.options)
         return self.query(sql)
 
     def query(self,sql):
@@ -143,6 +147,7 @@ class DBHelper:
 
         :param data: 字典，代表一条记录，键是字段名
         :return:
+        {'sid':19,'name':'tom','sex':'男'}
         """
         # 1 如果字典的值是字符串，两边添加单引号
         self.__add_quote(data)
@@ -167,6 +172,9 @@ class DBHelper:
 
         :param data: 字典
         :return:
+        {'sid':13,'name':'jerry'}
+        ['sid=13',"name='jerry'"]
+        sid=13,name='jerry'
         """
         self.__add_quote(data)
         self.options['value'] = ','.join([key+"="+value for key,value in data.items()])
@@ -209,13 +217,9 @@ class DBHelper:
 
 if __name__ == "__main__":
     db = DBHelper('student')
-    # data = db.where(**{'sno':'105'}).where(ssex='男').where().select()
-    # data = db.where(ssex='男').fields('sno,sname').where().select()
-    # data = db.fields('ssex,count(*) num').having(num__gt=2).groupby('ssex').select()
-    # data = db.orderby('sname','ssex desc').limit(1,3).select()
-    # print(data)
-    # print(db.sql)
+    # print(db)
     # print(db.__dict__)
-    # db.insert({'sno':'112','sname':'tom','sbirthday':'2019-4-2'})
-    # db.where(sno='105').update({'sname':'ok','class':'95035'})
-    # db.where(sno='105').delete()
+    data = db.fields('sex','count(*) num').groupby('sex').having(num__gt=1).select()
+
+    # data = db.fields('sid,name').select()
+    print(data)
