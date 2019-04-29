@@ -139,7 +139,7 @@ marquee标签的引入，学习标签应该：
 
 ### 5.1 有序列表（ol/li）
 
--   type: 数字，a ,A,I ,i
+-   type: 数字，a ,A,I ,i 1
 -   start 开始标号，默认从1开始
 
 ### 5.2 无序列表(ul/li)
@@ -328,7 +328,7 @@ marquee标签的引入，学习标签应该：
 
       -   type：checkbox
       -   value：必须设置
-      -   checked: 是否选中
+      -   checked: 是否选中,缺省选中，可以有多个
 
     - 文件上传
 
@@ -347,7 +347,7 @@ marquee标签的引入，学习标签应该：
 
     -   name 必须设置
     -   size：显示的行数，如果设置这个属性，下拉框会变成列表框
-    -   multiple：是否可以选择多行
+    -   multiple：是否可以选择多行，如果设置这个属性，下拉框会变成列表框
     -   下拉框选项（option）
         -   selected：是否选中
         -   value  需要设置，否则值就是option中间的文字
@@ -429,7 +429,7 @@ marquee标签的引入，学习标签应该：
         -   可以设置宽高
 
         ~~~
-        h1~h6   ul ol dl li p table  tr  form  div  header section footer
+        h1~h6  p hr ul ol dl li  table  tr  form  div  header section footer
         ~~~
 
     - 行内
