@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>表单</title>
+</head>
+<body>
+<!--
+request:
+POST /www.python1903.com/13_form.html?_ijt=sj9f5pin6okb8e77r1phh8lu51 HTTP/1.1   请求行
+Host: localhost:63342    请求头
+Connection: keep-alive
+Content-Length: 14
+......
+
+username=admin    请求体
+
+
+
+
+-->
+
+<form action="" method="get">
+    <input type="text" name="username" placeholder="请输入用户名" -maxlength="3"> <br>
+    <input type="password" name="password" placeholder="请输入密码" -maxlength="3"> <br>
+    <input type="radio" name="sex" value="1" checked id="man"> <label for="man">男</label>  <input type="radio" name="sex" value="0">女<br>
+    <input type="checkbox" name="hobby" value="1">游戏
+    <input type="checkbox" name="hobby" value="2" checked>美食
+    <input type="checkbox" name="hobby" value="3" checked>看电影
+    <input type="checkbox" name="hobby" value="4">睡觉 <br>
+    <input type="file"> <br>
+    <select name="address" multiple size="10">
+        <option value="1">河北</option>
+        <option value="2">北京</option>
+        <option value="3" selected>山东</option>
+        <option value="4">河南</option>
+    </select> <br>
+    <textarea name="resume"  cols="30" rows="10"></textarea> <br>
+    <input type="submit" value="提交">
+    <input type="reset">
+</form>
+</body>
+</html>
