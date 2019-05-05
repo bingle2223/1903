@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>绝对定位</title>
+    <style>
+        body{
+            height: 2000px;
+        }
+        #d1{
+            height: 600px;
+            width: 800px;
+            background: red;
+            /*相对于窗口，会随窗口滚动而滚动*/
+            position: relative;
+
+        }
+        #d2{
+            height: 200px;
+            width: 500px;
+            background: yellow;
+            position: absolute;
+            right: 0px;
+            bottom: 0px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="d1">
+    <div id="d2">
+        央广网北京5月5日消息（记者任梦岩）据中国之声《新闻纵横》报道，2016年，有不少山东考生报考了211高校郑州大学的部分专业，然而让他们大跌眼镜的是，录取通知书竟然是其二级学院“郑州大学西亚斯国际学院”发放的。在随后的两年多时间里，有的学生家长将郑州大学告上法庭，有的则因无法退档，只好去上学，却发现自己学的专业没有经过教育部批准。
+
+    如今，西亚斯国际学院已经脱离郑大成为独立的民办高校，可家长们还是搞不明白，当年报考的郑州大学，怎么就变成了民办高校？
+    </div>
+
+</div>
+
+<div id="d3"></div>
+</body>
+</html>

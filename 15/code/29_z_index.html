@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>绝对定位</title>
+    <style>
+        body{
+            height: 2000px;
+        }
+        #d1{
+            height: 600px;
+            width: 800px;
+            background: red;
+            /*相对于窗口，会随窗口滚动而滚动*/
+            position: absolute;
+            top:20px;
+            left: 50px;
+            z-index: 100;
+
+        }
+        #d2{
+            height: 200px;
+            width: 500px;
+            background: yellow;
+            position: fixed;
+            right: 0px;
+            bottom: 0px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="d1">
+</div>
+<div id="d2">
+</div>
+
+</body>
+</html>

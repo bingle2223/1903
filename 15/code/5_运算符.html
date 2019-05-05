@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>运算符</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    //1 算数运算符
+    // console.log(5 % 0)
+    // console.log(5 % 1)
+    // console.log(5 % 2)
+    // console.log(5 % 3)
+    // console.log(5 % 4)
+    // console.log(5 % 5)
+
+    // parseInt
+    console.log(5 / 3,parseInt(5 / 3))
+    //浮点数转整数，直接抹去小数点
+    //字符串转整数
+    a = "12okkkkk"
+    b = parseInt(a)
+    console.log(a,b)
+    console.log(parseInt('12'),typeof parseInt('12'))
+    console.log(parseInt('12.2'),typeof parseInt('12.2'))
+    console.log(parseInt('12dssdfdsdf'),typeof parseInt('12sdfsdf'))
+    // 只能转换数字开头的字符串
+    console.log(parseInt('d12dssdfdsdf'),typeof parseInt('d12sdfsdf'))
+
+    //boolean=>number
+    console.log(1 + true,1 + false)
+
+    //Math
+    console.log(Math.ceil(3.2),Math.floor(3.2))
+    //随机数
+    console.log(Math.random())
+
+    //[1,6]随机整数 [a,b]  parseInt(a + Math.random()*(b-a+1))
+    // console.log(parseInt(Math.random()*6 + 1))
+    // for(var i = 0;;i+=1){
+    //     a = parseInt(Math.random()*6 + 1)
+    //     if (a==6){
+    //         break
+    //     }
+    // }
+
+    //#rrggbb
+    //rgb()
+    color = "rgb("
+    color = color + parseInt(Math.random()*256) + ',' +  parseInt(Math.random()*256) +','+ parseInt(Math.random()*256) +')'
+    console.log(color)
+
+</script>

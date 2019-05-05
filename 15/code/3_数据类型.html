@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数据类型</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    // 数值类型   number
+    a = 10;
+    b = 10.3;
+    // console.log(typeof(a),typeof  b)
+
+    //布尔 boolean
+    c = false;
+    // console.log(typeof c);
+
+    //字符串  string
+    name = "hello";
+    // console.log(typeof name)
+    //任何类型和字符串相加，结果都是字符串
+    d = '' + 10;
+    // console.log(typeof  d)
+
+    // array
+    a = [10,11,33];
+    // console.log(a,typeof a )
+
+    //object
+    var b = new Object();
+    b.name = '张三';
+    b.age = 20;
+    // console.log(b,typeof b)
+
+    // undefined
+    // console.log(a1)
+    // var a1 = 9
+    // console.log(b.c)
+    console.log(undefined == undefined)
+
+    // NaN  Not a Number  运算错误
+    c = 10 / 'hello'
+    // console.log(c,typeof c)
+    // console.log(NaN == NaN)  //自己和自己不等
+    console.log(isNaN(NaN))
+
+    //null
+    var c = null
+    if (c) {
+        console.log("存在")
+    }
+</script>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js常用操作</title>
+</head>
+<body>
+<button id="btn">点一下吧</button>
+</body>
+</html>
+<script>
+    //1 获取标签
+    var oButton = document.getElementById('btn')
+    console.log("按钮",oButton)
+
+    //2 给标签添加事件
+    oButton.onclick = function () {
+        //3 事件处理
+        alert("我是一个小按钮")
+    }
+</script>
+<script>
+    //变量定义
+
+    //显式定义可以在定义之前引用变量
+    //隐式定义只能在定义之后引用
+    console.log('a=',a)
+    // console.log('b=',b)
+    //显式变量定义
+    var a = 10
+
+    //隐式变量定义
+    b = 12
+    /*
+    console.log(a,b,a+b)
+    alert只能输出一个字符串
+    alert(a)
+    write 会将结果写到页面
+    document.write(a,b)
+
+    */
+</script>

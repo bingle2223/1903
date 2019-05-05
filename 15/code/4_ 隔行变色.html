@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>隔行变色</title>
+</head>
+<body>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+</body>
+</html>
+<script>
+    var aDiv = document.getElementsByTagName('div')
+    // console.log(aDiv)
+    // for (index in aDiv) {
+    //     console.log(aDiv[index])
+    // }
+    // for(var i = 0;i < aDiv.length;i+=1){
+    //     console.log(aDiv[i])
+    // }
+    var i = 0
+    while (i<aDiv.length){
+        // console.log(aDiv[i])
+        aDiv[i].style.height = '50px'
+        aDiv[i].style.marginTop = '1px'
+        color = "rgb("
+        color = color + parseInt(Math.random()*256) + ',' +  parseInt(Math.random()*256) +','+ parseInt(Math.random()*256) +')'
+
+        aDiv[i].style.backgroundColor = color
+        // if (i % 2 == 0){
+        //     aDiv[i].style.backgroundColor = 'red'
+        // } else {
+        //     aDiv[i].style.backgroundColor = 'blue'
+        // }
+        i += 1
+    }
+
+</script>
