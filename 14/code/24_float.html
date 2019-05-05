@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>漂浮</title>
+    <style>
+        #d1{
+            width: 300px;
+            height: 100px;
+            background: red;
+            float: left;
+        }
+         #d2{
+            width: 400px;
+            height: 200px;
+            background: green;
+             float: right;
+        }
+         #d3{
+            width: 300px;
+            height: 100px;
+            background: blue;
+
+        }
+         #d4{
+            width: 700px;
+            height: 300px;
+            background: tomato;
+        }
+         /*在需要清除浮动标签前添加一个块标签，设置clear*/
+        /*span{*/
+            /*display: block;*/
+            /*clear: both;*/
+        /*}*/
+        .clear:after{
+                display:block;
+                content:'';
+                zoom:1;
+                clear:both;
+        }
+    </style>
+</head>
+<body>
+<!--
+float: left  right  none
+-->
+<div class="clear">
+   <div id="d1"></div>
+    <div id="d2"></div>
+</div>
+
+<!--<span></span>-->
+<div id="d3">
+    事实是否如此？昨天深夜，中国之声记者辗转联系到当时在场的家长和多位教育部门负责人，进一步了解到了事件的具体细节。而透过这起事件，究竟是哪些问题让教育主管部门负责人和接待群众间的矛盾激化？背后涉事各方又有哪些诉求？
+长春教育局回应：该副局长全区范围内通报批评 已向业主代表道歉
+
+在网友发布的视频中，一间会议室里，U型的办公桌两侧旁坐满了人，长春市南关区教育局副局长谭智正与对面的来访群众交谈：
+
+“我目前给你鉴定是听不懂话，什么叫听不懂话啊，听着咋地，我现在正跟你说呢，你能不能听完说话，你是哪个小区的，一会把他问一下子。”
+</div>
+
+<div id="d4"></div>
+</body>
+</html>
