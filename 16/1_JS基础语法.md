@@ -403,7 +403,56 @@ function test(a,b) {
 ## 七、面向对象
 
 ~~~
+//1 定义对象
+obj1 = new Object()
+obj1.name = "大傻"
+obj1.play = function() {
+	this.age = 20
+	console.log("投降输一半")
+}
+obj1.play()
 
+//2 工厂模式
+function createCat(name,age){
+	cat = new Object
+	cat.name = name
+	cat.age = age
+	cat.miao = function(){
+		console.log("傻子，快把本秒的小鱼干拿过来")
+	}
+	return cat
+}
+obj2 = createCat('大脸猫',4)
+obj2.miao()
+//3 构造函数
+function Person(name,age){
+	this.name = name
+	this.age = age
+	this.walk = function(){
+		console.log("走起")
+	}
+}
+p1 = new Person("哈哈",20)
+p1.walk()
+
+//4 原型法构造
+function Person(name,age){
+	this.name = name
+	this.age = age
+}
+Person.prototype.walk = function() {
+	console.log("走")
+};
+p2 = new Person("胡汉三",30)
+p2.walk()
+// 5 json
+obj3 = {
+	name:'tom',
+	age:21,
+	eat:function(){console.log("吃")}
+}
+obj3.eat()
+console.log(obj3)
 ~~~
 
 
