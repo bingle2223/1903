@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数组</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    //1 数组定义
+    var a = [1,2,3,4]
+    var b = [],c = Array()  //空数组
+    var d = Array(3)  //数组长度为3,3个元素都是undefined
+    var e = Array(1,2,3,4); //数组有四个元素：1,2,3,4
+    // console.log(a,e,d)
+    // console.log(d[0],d[1],d[2])
+    //2 数组的长度
+    // console.log(a.length)
+
+    //3 数组元素的存取
+    //下标从左向右:0,1,2,3..
+    // console.log(a[0],a[1])
+    // a[0] = 10
+    // console.log(a)
+    //不存在越界问题，访问不存在的元素返回undefined
+    // console.log(a[9])
+    // console.log(a)
+    // a[7] = 99  //数组会自动扩展，中间的元素都是undefined
+    // console.log(a)
+    // 4 遍历
+    // for(var i = 0;i < a.length;i++) {
+    //     console.log(a[i])
+    // }
+
+    // 2维数组
+    // a =  [
+    //     [1,2,3],
+    //     [4,5,6],
+    //     [7,8,9]
+    // ]
+    // for (var row = 0;row < a.length;row++){
+    //     // console.log(a[row])
+    //     for (var col = 0;col < a[row].length;col++){
+    //         console.log(a[row][col])
+    //     }
+    // }
+
+    // 数组常用函数
+    //添加元素
+    a = []
+    a.push(1,2,3); //数组末尾添加一个或多个元素
+    a.unshift(9,8); //数组开头增加元素
+
+    //删除元素
+    // res = a.pop(); //删除最后一个元素，并返回删除元素的值
+    // a.shift(); // 删除第一个元素的值
+    // console.log(a)
+
+    //查找
+    // console.log(a.indexOf(10))  //元素不存在，则返回-1
+    // console.log(a.indexOf(3))  //元素存在，则返回下标
+
+    //数组元素拼接为一个字符串
+    // s1 = a.join(); //默认分隔符为,
+    // s1 = a.join('-')
+    // console.log(s1)
+
+
+</script>

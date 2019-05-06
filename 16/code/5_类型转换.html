@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    //其他类型转字符串
+    // 1 内置类型都有toString方法
+    // a = 10
+    // console.log(a.toString())
+    // console.log(a.toString(2))
+    // console.log(a.toString(8))
+    // console.log(a.toString(16))
+    // //随机颜色
+    // color = '#'
+    // color += parseInt(Math.random()*256).toString(16)+parseInt(Math.random()*256).toString(16)+parseInt(Math.random()*256).toString(16)
+    // console.log(color)
+
+    // 字符+任何其他类型的值，结果都是字符串
+    // a = 10
+    // b = [1,2,3]
+    // res = '' + a + b
+    // console.log(res,typeof res)
+
+    //String
+    // console.log(String(10))
+
+    //其他类型转数值
+    // console.log(parseInt("-12dfkg"))
+    // console.log(parseInt("s12dfkg"))  //NaN
+    // console.log(parseFloat("12.3dfkg"))
+    // console.log(parseFloat("-12.3dfkg"))
+    // console.log(parseFloat("c-12.3dfkg")) //NaN
+    console.log(Number("2.3"))
+    // 要求字符串中不能包含除. + - 数字之外的字符
+    console.log(Number("2.3dsdf"))  //NaN
+</script>

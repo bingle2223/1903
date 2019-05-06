@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button>按钮1</button>
+<button>按钮2</button>
+<button>按钮3</button>
+</body>
+</html>
+<script>
+    //封闭空间
+    //1 定义即调用
+    // (
+    //     function (a,b){
+    //         console.log(a+b)
+    //     }
+    // )(3,5)
+
+    var aButton = document.getElementsByTagName('button')
+    console.log(aButton)
+    // for (var i = 0;i<aButton.length;i++){
+    //     aButton[i].onclick = function () {
+    //         console.log("我是第"+i+"个按钮")
+    //     }
+    // }
+
+    //用封闭空间实现
+   for (var i = 0;i<aButton.length;i++){
+        //每循环一次就会产生一个新的封闭空间对象，封闭空间对象会保存传进来的i的值
+       (
+           function (index) {
+                 aButton[index].onclick = function () {
+                     console.log("我是第" + (index+1) + "个按钮")
+                 }
+           }
+       )(i)
+    }
+</script>

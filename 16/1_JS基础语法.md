@@ -386,7 +386,7 @@ function test(a,b) {
 
 ### 7.递归函数
 
-### 8.变量的作用域
+### 8.变量的作用域(***)
 
 - 在函数内部的用var定义变量，是局部变量，作用域在整个函数体内
 
@@ -424,6 +424,7 @@ function createCat(name,age){
 }
 obj2 = createCat('大脸猫',4)
 obj2.miao()
+
 //3 构造函数
 function Person(name,age){
 	this.name = name
@@ -445,7 +446,8 @@ Person.prototype.walk = function() {
 };
 p2 = new Person("胡汉三",30)
 p2.walk()
-// 5 json
+
+// 5 json对象
 obj3 = {
 	name:'tom',
 	age:21,

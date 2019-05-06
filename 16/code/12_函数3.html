@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>参数</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    //形参：不要加var
+    function demo1(){
+        // console.log(arguments)
+        // console.log(arguments.join()) //arguments不是数组
+          var arr = Array.prototype.slice.call(arguments);
+          console.log(arr)
+        // for(var i = 0;i < arguments.length;i++) {
+        //     console.log(arguments[i])
+        // }
+    }
+
+    //实参
+    //实参不必和形参一一对应,实参可以任意多个
+    // demo1()
+    // demo1(1)
+    // demo1(1,2)
+    // demo1(1,2,3)
+    // demo1(1,2,3,4,5)
+
+    //参数传递
+    //值传递
+    // var a = 10, b = 20
+    // function swap(x,y) {
+    //     //x,y是独立的局部变量，除了接受a和b的值之外，和a、b没有任何关联
+    //     // 交换的是x和y，不是a和b
+    //     var tmp = x;
+    //     x = y;
+    //     y = tmp;
+    // }
+    // swap(a,b);
+    // console.log('a=',a,'b=',b)
+
+    //引用传递 （数组、对象）
+    var a = [1,2,3]
+    function update(x) {
+        x[0] = 100
+    }
+    //把a所指向的数组地址传给了x，x和a指向同一个数组，修改x就是修改a
+    // update(a)
+    // console.log(a)
+
+    // 内部函数
+    function outter() {
+
+        function inner() {
+            console.log("inner")
+        }
+        inner()
+        return inner
+    }
+    // outter()
+    // outter()
+    // outter()
+    // outter()
+
+    //在外部函数外面不能直接调用内部函数
+    // inner()
+
+    //间接调用
+    // var pf = outter()
+    // pf()
+    // pf()
+    // pf()
+    // pf()
+    // pf()
+
+    //递归
+    function fac(n) {
+        //递归终止条件
+        if (n < 1){
+            return 1
+        }
+        //递归
+        return n * fac(n-1)
+    }
+    console.log(fac(5))
+</script>

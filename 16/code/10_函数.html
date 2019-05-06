@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>函数</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    //1 定义
+    //命名函数
+    function add(a,b) {
+        return a + b
+    }
+    // function $(){
+    //     console.log("美刀")
+    // }
+    // $()
+    // console.log(add(3,5))
+
+    //匿名函数
+    // var pf = function () {
+    //     console.log("匿名函数")
+    // }
+    // pf()
+    // var pf2 = add;
+    // console.log(pf2(9,10))
+</script>
+
+<script>
+    // add(2,3)
+    //函数调用
+    //可以在定义之前调用该函数
+    function add(a, b){
+        console.log(a+b)
+    }
+
+    // function compare(a,b) {
+    //     return a<b?true:false
+    // }
+    //回调
+    function my_sort(a,cmp){
+        //冒泡排序
+        for (var i = 0;i<a.length-1;i++){
+            for (var j = 0;j < a.length-1;j++){
+                if (cmp(a[j],a[j+1])){
+                    tmp = a[j]
+                    a[j] = a[j+1]
+                    a[j+1] = tmp
+                }
+            }
+        }
+    }
+    a = [98,76,21,89,43]
+    a = [
+        [9,2],
+        [3,4,5],
+        [7,8]
+    ]
+    // my_sort(a,compare)
+
+     function compare1(a,b) {
+        return a[0]>b[0]?true:false
+    }
+    my_sort(a,compare1)
+    console.log(a)
+</script>

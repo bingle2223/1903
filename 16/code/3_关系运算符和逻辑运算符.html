@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>关系运算符和逻辑运算符</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    // > >= < <= !=  ==
+    //关系运算结果必须是布尔值
+    // console.log( 3 > 2)
+    // console.log( 3 >= 2)
+    // console.log( 3 < 2)
+    // console.log( 3 <= 2)
+    // console.log( 3 != 2)
+    // console.log( 3 == 2)
+
+    // === 判恒等
+    // == 判等，只要值相等结果就是true，会进行类型转换
+    // console.log(2 == '2')
+    // === 不会自动进行类型转换，只有值和类型都相同结果才是true，否则就是false
+    // console.log(2 === '2')
+
+    // !==  判非恒等  不自动进行类型转换，只要值和类型有一处不同，救过就是true
+    // console.log(2 !== '2')
+    // != 会自动进行类型转换
+    // console.log(2 != '2')
+
+
+    // 逻辑运算符
+    // &&  如果第一个操作数是真，结果就是第二个操作数的值
+    // console.log(2.1 && '2',typeof(2.1 && '2') );
+
+    // 如果第一个操作数的值为假，结果就是第一个操作数的值, 第二个操作数不计算，这就是逻辑短路
+    // console.log(0 && '2');
+    // a = 1,b = 2;
+    // console.log(a > 1 && ( b += 3)); // false
+    // console.log(a,b) // 1,2
+
+    // ||
+    // 如果第一个操作数为真，结果就是第一个操作数的值，不计算第二个操作数，这也是逻辑短路
+    // console.log(3 || 0);
+    // 如果第一个操作数为假，结果就是第二个操作数的值
+    // console.log(-0 || 5 > 2)
+
+    // ! 逻辑非，它的结果必然是true和false
+    // console.log(!5,!0)
+
+</script>

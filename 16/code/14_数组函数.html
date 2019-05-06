@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    //1 sort
+    // var a = [89,543,254,90,76];
+    // //从小到大排序
+    // a.sort(function (a,b) {
+    //    return a>b?-1:1
+    // })
+    // console.log(a)
+    // var a = [{name:'n1',age:20},{name:'n2',age:19},{name:'n1',age:26}]
+    // a.sort(function (a,b) {
+    //     return a.age > b.age? 1:-1
+    // })
+    // console.log(a)
+
+    //2 filter
+    // var a = [2,3,6, 10,13,35]
+    // //filter 返回一个新数组
+    // res = a.filter(function (value,index) {
+    //     /* value 元素的值，index 元素的下标
+    //     * 返回true，元素放到新数组，
+    //     * */
+    //
+    //     return value % 2 == 0 ?true:false
+    // })
+    // console.log(res,a)
+
+    //3 .every
+    // var  a = [2,3,6, 10,13,35]
+    // //every 检测数组中所有的元素是否满足指定条件,如果所有元素都满足条件返回true，只要有一个不满足的就返回false
+    // res = a.every(function (value,index) {
+    //     return value > 0?true:false
+    // })
+    // console.log(res)
+
+    //4  map
+    var  a = [2,3,6, 10,13,35]
+    res = a.map(function (value,index) {
+        return value + 10
+    })
+    console.log(a)
+    console.log(res)
+</script>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>全选</title>
+</head>
+<body>
+<div id="header">
+    <input type="checkbox">全选
+    <input type="checkbox">反选
+</div>
+<div id="content">
+    <input type="checkbox"> <br>
+    <input type="checkbox"> <br>
+    <input type="checkbox"> <br>
+    <input type="checkbox"> <br>
+    <input type="checkbox"> <br>
+    <input type="checkbox"> <br>
+    <input type="checkbox"> <br>
+    <input type="checkbox"> <br>
+    <input type="checkbox"> <br>
+    <input type="checkbox"> <br>
+    <input type="checkbox"> <br>
+</div>
+</body>
+</html>
+<script>
+    // getElementById 必须通过document调用
+    // getElementById返回一个对象
+    var oHeader = document.getElementById('header');
+    var oContent = document.getElementById('content')
+
+    //getElementsByTagName 不必通过document调用，只要是父标签就可以调用
+    //getElementsByTagName返回的是一个集合
+    var aCheckBox = oHeader.getElementsByTagName('input');
+    var aCBox = oContent.getElementsByTagName('input')
+    // console.log(oHeader,aCheckBox)
+    // console.log(aCBox)
+
+
+
+    //全选事件处理
+    // console.log(aCheckBox[0])
+    aCheckBox[0].onclick = function () {
+        // alert("全选")
+        for (var i = 0;i < aCBox.length;i++){
+            aCBox[i].checked = true
+        }
+    }
+
+    //反选
+    aCheckBox[1].onclick = function () {
+        // alert("反选")
+        for (var i = 0;i < aCBox.length;i++){
+            // if (aCBox[i].checked) {
+            //     aCBox[i].checked = false
+            // } else {
+            //     aCBox[i].checked = true
+            // }
+             aCBox[i].checked = !aCBox[i].checked
+
+        }
+    }
+</script>

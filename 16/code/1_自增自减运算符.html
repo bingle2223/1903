@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>自增自减</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    var a = 1
+    //自增自减只能对变量进行运算，不能针对常量
+
+    //自增：  前置自增(++在变量前)，后置自增(++在变量后)
+    // b = a++
+    /*
+    后置自增运算规律：先拿a的值参与计算，然后a的值的再加1
+    b = a
+    a = a + 1
+    */
+
+    // b = ++a
+    /*
+    前置自增：先把a的值加1，然后再拿a的值参与其他运算
+    a = a+1
+    b = a
+
+     */
+    // d = ++a + a++ + ++a
+    //自增一般用在for循环中
+
+    // b = --a
+    console.log('a=',a,'b=',b);
+    // console.log(4++)  //error
+    b = 1;
+    // 不能针对表达式（数组元素除外a[0]）进行自增自减计算
+    // (b+1)++
+
+</script>

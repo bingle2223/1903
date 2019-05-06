@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>流程控制</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    // if语句
+    var a = 0
+    // 单if
+    // if (a){
+    //     console.log("我是正确的")
+    // }
+
+    // if (a){
+    //     console.log("我是正确的")
+    // } else {
+    //     console.log("如果我错了，请参考第一条")
+    // }
+
+    // a = parseInt(Math.random()*3)
+    // if (1 == a) {
+    //     console.log("上上大吉")
+    // } else  if (2 == a) {
+    //     console.log("出入平安")
+    // } else {
+    //     console.log("下下签，出门注意")
+    // }
+
+    //如果是有限个数值判等，可以是switch-case
+    a = parseInt(Math.random()*5)
+    //带break的
+    // switch (a) {
+    //     case 1:
+    //        console.log("上上大吉")
+    //          break
+    //     case 2:
+    //         console.log("出入平安")
+    //         break
+    //     case 3:
+    //         console.log("下下签，出门注意")
+    //         break
+    //     default:
+    //         console.log("数据错误")
+    // }
+
+    //不带break
+    // console.log(a)
+    // switch (a) {
+    //     case 1:
+    //        console.log("上上大吉")
+    //     case 2:
+    //         console.log("出入平安")
+    //     case 3:
+    //         console.log("下下签，出门注意")
+    //     default:
+    //         console.log("数据错误")
+    // }
+    // console.log("===================")
+
+
+    // var i = 0,sum = 0
+    // while (i < 101) {
+    //     sum += i
+    //     i++
+    // }
+    // for (var i=0,sum=0;i<101;i++){
+    //     sum += i
+    // }
+    //  for (var i=0,sum=0;;i++){
+    //     if (i>100){
+    //         break
+    //     }
+    //     sum += i
+    // }
+    //    for (var i=0,sum=0;;){
+    //     if (i>100){
+    //         break
+    //     }
+    //     sum += i;
+    //     i++
+    // }
+    //     var i=0,sum=0
+    //     for (;;){
+    //     if (i>100){
+    //         break
+    //     }
+    //     sum += i;
+    //     i++
+    // }
+    // alert(sum)
+
+    // do-while至少执行一次循环体
+    // var i=0,sum=0
+    // do {
+    //     sum += i
+    //     i++
+    // }while(i<101)
+    var i=0,sum=0;
+    var flag = true
+    while( flag || i<101 ){
+        flag = 0
+        sum += i++
+    }
+    console.log(sum)
+</script>

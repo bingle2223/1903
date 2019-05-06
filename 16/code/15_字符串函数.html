@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    var s1 = "找一个靠谱的队友你会走的更远"
+    //查找子串，找到了返回下标，找不到返回-1
+    // res = s1.indexOf('队友1')
+    //第二个参数是查找的起始下标
+    // res = s1.indexOf('队友',7)
+    // if (res>=0){
+    //     console.log("找到了")
+    // }
+
+    //lastIndexOf  从右向左搜索
+    // var s1 = "找一个靠谱的队友你会走的队友更远"
+    // console.log(s1.lastIndexOf('队友'))  //12
+
+    // var phone = "0310-37488498"
+    // res = phone.match(/^\d{3,4}-\d{7,8}$/)
+    // console.log(res)
+
+    //  var phone = "sddfsdf03kk11-37488498sfsdfsdfdsfds"
+    // res = phone.search(/\d{3,4}-\d{7,8}/)
+    // console.log(res)
+
+    // var s2 = "aa  aaa     4444    dddd"
+    // res = s2.replace(/\s+/g,"")
+    // console.log(s2)
+    // console.log(res)
+
+    //slice 切片
+    // var s2 = "aa  aaa     4444    dddd"
+    // // 包头不包尾
+    // res = s2.slice(4,7)
+    // console.log(res)
+
+    //分割
+    var s2 = "aa  aaa     4444    dddd"
+    //返回一个数组
+    res = s2.split(/\s+/)
+    console.log(res)
+
+</script>

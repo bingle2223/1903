@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    var d1 = new Date()
+    //得到指定日期和时间
+    var d2 = new Date(2017,11,20,23,20,34)
+    var d3 = new Date("2018-11-23")
+    // console.log(d1,d2,d3)
+    //年月日
+    // console.log(d1.getFullYear(),d1.getMonth()+1,d1.getDate())
+
+    //日期差值
+    var diff = d1 - d2
+    console.log(diff) //毫秒
+    console.log(parseInt(diff/1000)) //秒
+    console.log(parseInt(diff/1000/60)) //分
+    console.log(parseInt(diff/1000/60/60)) //小时
+    console.log(parseInt(diff/1000/60/60/24)) //天
+</script>
