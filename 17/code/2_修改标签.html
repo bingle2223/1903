@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>获取元素</title>
+    <style>
+        div{
+            height: 100px;
+            margin: 5px;
+            background: red;
+        }
+        .d22{
+            background-color: orange;
+        }
+    </style>
+</head>
+<body>
+<div class="d1"></div>
+<div class="d2"></div>
+<div name="d3">
+    <span>春光明媚</span>
+</div>
+<input type="text" id="input1">
+<button>获取输入</button>
+</body>
+</html>
+<script>
+
+    //ByName
+    //必须通过document调用
+    oD3 = document.getElementsByName('d3')[0]
+    // 1.修改样式
+    oD3.style.backgroundColor = 'pink'
+
+    // 2修改标签中间的内容
+    //修改中间的标签innerHTML
+    // oD3.innerHTML = "<h2>阳光正好</h2>"
+    //修改文本, 字符串中间的标签看做普通文本，不解释
+    oD3.innerText = "<h2>阳光正好</h2>"
+
+    // 3 修改标签的属性
+    // oD2 = document.getElementsByClassName('d2')[0]
+    // oD2.className = 'd22'
+    oInput = document.getElementById('input1')
+    oInput.value = "请输入用户名"
+
+    oButton = document.getElementsByTagName('button')[0]
+    oButton.onclick = function () {
+        console.log( oInput.value )
+        //显示和消失
+        // console.log(oD3)
+        value = oD3.style.display
+        if (value != 'none'){
+            oD3.style.display = 'none'
+        } else {
+            oD3.style.display = 'block'
+        }
+
+
+    }
+</script>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>获取元素</title>
+    <style>
+        div{
+            height: 100px;
+            margin: 5px;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+<div class="d1"></div>
+<div class="d2"></div>
+<div name="d3"></div>
+
+</body>
+</html>
+<script>
+    var oBody = document.getElementsByTagName('body')[0]
+    console.log(oBody)
+    //返回的是一个集合，不是js的数组，不能使用数组函数
+    //可以通过父标签获取
+    var aDiv = oBody.getElementsByClassName('d2');
+    var oD2 = aDiv[0];
+    oD2.style.backgroundColor = 'yellow';
+    console.log(aDiv)
+
+    //ByName
+    //必须通过document调用
+    oD3 = document.getElementsByName('d3')[0]
+    oD3.style.backgroundColor = 'pink'
+</script>

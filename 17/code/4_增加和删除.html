@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>增加和删除</title>
+    <style>
+        input{
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+ <button>增加</button>
+ <button>删除</button>
+</body>
+</html>
+<script>
+    var aButton = document.getElementsByTagName('button');
+    oBody = document.getElementsByTagName('body')[0]
+
+    //增加
+    aButton[0].onclick = function () {
+        //1 创建标签
+        var child = document.createElement('input')
+        child.type = 'button'
+        child.value='我是按钮'
+        child.style.width = '200px'
+        child.style.height = '100px'
+        child.style.borderRadius = "50%"
+        child.style.top = ''+ parseInt(Math.random()*600) + 'px'
+        child.style.left = ''+ parseInt(Math.random()*1200) + 'px'
+
+        //2 添加到父标签下
+        oBody.appendChild(child)
+    }
+    
+    //删除
+    aButton[1].onclick = function () {
+        //删除所有子标签
+        // oBody.innerHTML = ''
+        var aInput = oBody.getElementsByTagName('input')
+        console.log(aInput.length)
+        //从后往前删除
+        for (var i = aInput.length - 1;i>=0;i--){
+            oBody.removeChild(aInput[i])
+        }
+    }
+</script>

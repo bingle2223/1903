@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <ul>
+        <li>雷神</li>
+        <li>蜘蛛侠</li>
+        <li>鹰眼</li>
+    </ul>
+</div>
+</body>
+</html>
+<script>
+    oUl = document.getElementsByTagName('ul')[0]
+    //children
+    console.log(oUl.children)
+    // oUl.children[0].style.fontSize = '3em'
+    //firstElementChild
+    oUl.firstElementChild.style.fontSize = '3em'
+    oUl.lastElementChild.style.color = 'red'  //lastElementChild 最后一个孩子
+    //前一个兄弟
+    oUl.lastElementChild.previousElementSibling.style.background = 'yellow'
+    //父标签
+    oUl.parentNode.style.border = "5px solid gold"
+
+    //浏览器的兼容写法
+    child = oUl.firstElementChild || oUl.firstChild
+    child.style.backgroundColor = "red"
+</script>

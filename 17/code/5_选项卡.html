@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>选项卡</title>
+    <style>
+        span{
+            display: block;
+            width: 60px;
+            height: 20px;
+            float: left;
+        }
+        .clear{
+            display: block;
+            content: '';
+            zoom: 1;
+            clear: both;
+        }
+        .active{
+            background-color: red;
+        }
+        #content div{
+            display: none;
+        }
+         #content  .current{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div id="header" class="clear" style="height: 30px;padding-left: 20px">
+    <span class="active">财经</span>
+    <span>宏观</span>
+    <span>理财</span>
+</div>
+<div id="content">
+    <div style="height: 300px;width: 200px;background: red" class="current"></div>
+    <div style="height: 300px;width: 200px;background: blue"></div>
+    <div style="height: 300px;width: 200px;background: yellow"></div>
+</div>
+</body>
+</html>
+<script>
+    var aSpan = document.getElementsByTagName('span')
+    var oContent = document.getElementById('content')
+    var aDiv = oContent.children
+
+    for (var i = 0;i < aSpan.length;i++){
+        aSpan[i].index = i  //动态添加一个属性，保存span的下标
+        //onmouseover鼠标移动到标签上面自动触发
+        aSpan[i].onmouseover = function () {
+            //清空所有span的className
+             for (var j = 0;j < aSpan.length;j++){
+                 aSpan[j].className = ''
+                 aDiv[j].className = ''
+             }
+
+            //在事件处理函数中，this代表当前标签
+            this.className = 'active'
+            console.log(i,this.index)
+            aDiv[this.index].className = 'current'
+        }
+    }
+
+</script>
