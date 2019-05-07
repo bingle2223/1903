@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>选项卡</title>
+    <style>
+        *{margin: 0px}
+        body{padding: 30px 100px}
+        #menu button{
+            width: 100px;
+            height: 40px;
+            font-size: 20px;
+        }
+         /*选中按钮时*/
+         #menu .active{
+             border: 2px solid purple;
+         }
+
+        /*div*/
+        #content div{
+            width:310px;
+            height: 300px;
+            display: none;
+        }
+         #content .show{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<div id="menu">
+    <button class="active">新闻</button>
+    <button>体育</button>
+    <button>军事</button>
+</div>
+<div id="content">
+    <div style="background-color: red"   class="show">新闻</div>
+    <div style="background-color: yellow">体育</div>
+    <div style="background-color: purple">军事</div>
+</div>
+</body>
+</html>
+<script>
+    var aButton = document.getElementsByTagName('button')
+    //获取content
+    var oContent = document.getElementById('content')
+    //获取content 的所有div子标签
+    var aDiv = oContent.children
+
+    aButton[0].onclick = function () {
+         //设置当前选中的按钮的样式
+        aButton[0].className = 'active'
+        aButton[1].className = ''
+        aButton[2].className = ''
+
+         aDiv[0].className = 'show'
+         aDiv[1].className = ''
+         aDiv[2].className = ''
+    }
+     aButton[1].onclick = function () {
+         //设置当前选中的按钮的样式
+        aButton[1].className = 'active'
+        aButton[0].className = ''
+        aButton[2].className = ''
+
+        aDiv[1].className = 'show'
+         aDiv[0].className = ''
+         aDiv[2].className = ''
+    }
+     aButton[2].onclick = function () {
+         //设置当前选中的按钮的样式
+        aButton[2].className = 'active'
+        aButton[1].className = ''
+        aButton[0].className = ''
+
+         aDiv[2].className = 'show'
+         aDiv[1].className = ''
+         aDiv[0].className = ''
+    }
+</script>

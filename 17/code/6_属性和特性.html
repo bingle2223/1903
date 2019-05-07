@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--  标签上自定义的属性称之为特性  index -->
+<div id="d1" index="10"></div>
+</body>
+</html>
+<script>
+    var oD1 = document.getElementById('d1');
+    //特性不能直接通过对象点获取
+    // console.log(oD1.id,oD1.index)
+    // //获取特性的值
+    // console.log(oD1.getAttribute('index'))
+    // //设置特性的值
+    // oD1.setAttribute('index',100)
+
+    //动态给对象添加属性
+    oD1.ok = 'hello';
+    console.log(oD1.ok)
+
+</script>
