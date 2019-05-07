@@ -17,7 +17,22 @@ textarea { width:300px; height:150px; }
 	
 </body>
 </html>
+<script>
+	var oTextarea = document.getElementById('t1')
+	var s1 = oTextarea.value
+	// var res = s1.split(/\s+/)
+	// console.log(res)
+	// var sum = 0
+	// for(var i = 0;i<res.length;i++){
+	//     if(res[i].indexOf('门')>=0){
+	//         sum++
+	// 	}
+	// }
+	// alert(sum)
 
+	res = s1.match(/门+/g)
+	console.log(res.length)
+</script>
 
 
 

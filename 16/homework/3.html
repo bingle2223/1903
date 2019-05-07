@@ -24,8 +24,15 @@
 </body>
 </html>
 <script>
+	var oT1 = document.getElementById('t1')
 	var oT2 = document.getElementById('t2')
-	oT2.value = "value1=a\nvalue2=b"
+	var oBtn = document.getElementById('btn')
+	oBtn.onclick = function () {
+		var s1 = oT1.value.substr(1)
+		// console.log(s1)
+		oT2.value = s1.split('&').join('\n')
+    }
+
 </script>
 
 

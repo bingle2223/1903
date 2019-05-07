@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>定时器</title>
+    <style>
+        div{
+            height: 200px;
+            background-color: red;
+            font-size: 100px;
+            line-height: 200px;
+            text-align: center;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div id="d1">1</div>
+</body>
+</html>
+<script>
+
+    var oDiv = document.getElementById('d1')
+
+    function dosomething() {
+        oDiv.style.backgroundColor = 'yellow'
+        clearTimeout(timer)
+        timer = null
+    }
+//1 一次性定时器
+//     var timer = setTimeout(dosomething,1000)
+
+    //2 周期性定时器
+    var timer = setInterval(function () {
+        var txt = parseInt(oDiv.innerText) //变为整数
+        txt++  //加1
+        oDiv.innerText = '' + txt
+        if (txt>5){
+            //停止定时器
+            clearInterval(timer)
+        }
+    },1000)
+</script>

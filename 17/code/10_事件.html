@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事件</title>
+    <style>
+        div{
+            height: 200px;
+            width: 300px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+<script>
+    // 标签还没有生成，不能引用
+    //  var oText = document.getElementById('input1')
+    //  console.log(oText)
+    // oText.value = "hello"
+    // 所有的标签和外链文件都加载完毕后执行
+    window.onload = function(){
+         var oText = document.getElementById('input1')
+         console.log(oText)
+        oText.value = "hello"
+    }
+</script>
+
+<input type="text" id="input1">
+
+<div></div>
+</body>
+</html>
+<script>
+    var oDiv = document.getElementsByTagName('div')[0];
+    var oText = document.getElementById('input1')
+
+    //7 焦点事件
+    oText.onfocus = function(){
+        this.value = ''
+        // this.style.backgroundColor = 'red'
+    }
+
+    //8 onblur失去焦点
+    oText.onblur = function(){
+        //数据校验
+        var value = this.value
+        // alert(value)
+        console.log(value)
+        if (!value){
+            alert("用户名不能为空")
+        }
+    }
+
+
+
+
+
+    //1 鼠标点击
+    oDiv.onclick = function () {
+        //事件处理函数，系统自动调用
+        // this指针，指向当前的标签
+        this.style.backgroundColor = 'yellow'
+        console.log("单击")
+    }
+
+    //2 双击
+    oDiv.ondblclick = function () {
+        this.style.backgroundColor = 'grey'
+        console.log("双击")
+    }
+    //3 mouserove s鼠标移动到div上
+    oDiv.onmouseover = function () {
+        this.style.width = '1000px'
+    }
+
+    //4 mouseout 鼠标移出div
+    oDiv.onmouseout = function () {
+        this.style.width = '300px'
+    }
+
+    //5. mousedown 鼠标按下
+    oDiv.onmousedown = function () {
+        this.style.height = '500px'
+    }
+
+    // 6 mouseup 松开鼠标按钮
+    oDiv.onmouseup = function () {
+        this.style.height = '200px'
+    }
+
+</script>
