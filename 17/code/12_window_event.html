@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            width: 2000px;
+            height: 2000px;
+        }
+    </style>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+    //当窗口大小发生变化的时候触发
+    window.onresize = function () {
+        // console.log("resize")
+        // console.log("inner",this.innerWidth,this.innerHeight)
+        // console.log("client",document.documentElement.clientWidth,document.documentElement.clientHeight)
+    }
+    //窗口滚动
+    window.onscroll = function () {
+        console.log('垂直',document.body.scrollTop || document.documentElement.scrollTop)
+        console.log('水平',document.body.scrollLeft || document.documentElement.scrollLeft)
+    }
+</script>

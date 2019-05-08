@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第二页</title>
+</head>
+<body>
+<a href="3.html">第三页</a> <br>
+<button>后退</button>
+<button>前进</button>
+</body>
+</html>
+<script>
+    var aButton = document.getElementsByTagName('button')
+    //后退
+    aButton[0].onclick = function () {
+        history.back()
+    }
+
+    //前进
+    aButton[1].onclick = function () {
+        history.forward()
+    }
+</script>

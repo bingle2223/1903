@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事件冒泡</title>
+</head>
+<body>
+    <div id="d1">
+        <button id="btn">点一下</button>
+    </div>
+</body>
+</html>
+<script>
+    var oBody = document.getElementsByTagName('body')[0]
+    var oD1 = document.getElementById('d1')
+    var oBtn = document.getElementById('btn')
+
+    oBtn.onclick = function () {
+        alert("button")
+    }
+
+    oD1.onclick = function () {
+        alert("div")
+    }
+     oBody.onclick = function () {
+        alert("body")
+    }
+</script>

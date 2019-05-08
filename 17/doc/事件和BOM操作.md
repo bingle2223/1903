@@ -17,11 +17,11 @@
 
 - 滚动距离
   - 垂直滚动的距离
-    - document.body.scrollTop 只读
+    - document.body.scrollTop 只读(非h5文档)
     - h5     document.documentElement.scrollTop  只读
   - 水平滚动的距离
-    - document.body.scrollLeft 只读
-    - h5 document.documentElement.scrollLeft
+    - document.body.scrollLeft 只读(非h5文档)
+    - h5   document.documentElement.scrollLeft
 - 弹框
   - alert
   - confirm 确认框

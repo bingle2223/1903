@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>第三页</title>
+</head>
+<body>
+<button>第一页</button>
+</body>
+</html>
+<script>
+     var oButton = document.getElementsByTagName('button')[0]
+    //后退
+    oButton.onclick = function () {
+        history.go(-2)
+    }
+</script>

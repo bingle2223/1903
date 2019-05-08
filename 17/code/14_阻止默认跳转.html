@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--<a href="http://www.baidu.com" onclick="return false;">百度</a>-->
+<a href="http://www.baidu.com" onclick="do_click()">百度</a>
+</body>
+</html>
+<script>
+    function do_click(e) {
+        var ev = e || event
+        console.log()
+        ev.preventDefault()
+    }
+</script>
