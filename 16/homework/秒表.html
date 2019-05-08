@@ -9,7 +9,7 @@
 	</style>
 </head>
 <body>
-	<div id='digital'>00:00.00</div>
+	<div id='digital'>00:00.000</div>
 	<div class='father'>
 		<input type="button" value="开始" id='start'>
 		<input type="button" value="暂停" id='pause'>
@@ -20,3 +20,74 @@
 
 </script>
 </html>
+<script>
+
+	var aButton = document.getElementsByTagName('input')
+	var timer = null //定时器
+	var start_time = null  //开始时间
+	var end_time = null //结束时间
+	var oDigital = document.getElementById('digital')
+	var diff = 0   //时间差值
+	var remained = 0; //保留之前的秒数
+	var is_pause = false; // 是否暂停，默认是假
+
+	//1 给按钮添加事件
+	//开始
+	aButton[0].onclick = function () {
+		//添加定时器
+		if (timer == null) {
+			start_time = new Date();
+	        timer  = setInterval(function () {
+                 end_time = new Date(); //当前时间
+
+				diff = end_time - start_time;//计算时间差值 毫秒
+                if (is_pause) { //按过暂停
+                    diff += remained
+                }
+
+                var secod = parseInt(diff / 1000) % 60; //秒
+                var minute = parseInt(diff / 1000 / 60); //分钟
+                var micro = diff % 1000; //毫秒
+                oDigital.innerText = '' + zero_fill(minute) + ":" + zero_fill(secod) + ":" + zero_fill_1(micro)
+            },30);
+		}
+    };
+
+    //暂停
+    aButton[1].onclick = function () {
+		//干掉定时器
+		clearInterval(timer)
+		timer = null
+		is_pause = true; //把暂停标志设置为true
+		remained = diff ;  //保留以前的时间
+
+    }
+
+    //重置
+    aButton[2].onclick = function () {
+			clearInterval(timer)
+		    timer = null
+		    oDigital.innerText = "00:00:000"
+		    remained = 0;
+			diff = 0;
+		   is_pause = false;
+    }
+
+    function  zero_fill(num) {
+		if (num<10){
+		    return '0' + num
+		} else {
+		    return '' + num
+		}
+    }
+    function  zero_fill_1(num) {
+		if (num<10){
+		    return '00' + num
+		} else if (num<100) {
+		    return '0' + num
+		} else {
+		    return '' + num
+		}
+    }
+
+</script>
