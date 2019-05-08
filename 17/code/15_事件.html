@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事件</title>
+    <style>
+        div{
+            height: 200px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+<div id="d1"></div>
+<form action="http://www.baidu.com">
+    <input type="text" name="username">
+    <input type="submit" value="提交" id="sub">
+</form>
+</body>
+</html>
+<script>
+    var oDiv = document.getElementById('d1')
+    var oBody = document.getElementsByTagName('body')[0]
+    var oSub = document.getElementById('sub')
+    oBody.onclick = function(e){
+        alert("body")
+    }
+
+    oDiv.onclick = function (e) {
+        //兼容写法，兼容IE和其他高级浏览器
+        var ev = e || event
+
+        alert("div")
+        //取消冒泡
+        // ev.cancelBubble = true
+        // ev.stopPropagation()
+        // console.log(e)
+    }
+    oSub.onclick = function (e) {
+        var ev = e || event
+        ev.stopPropagation()
+
+        //阻止缺省行为
+        // ev.preventDefault()
+        return false
+    }
+
+</script>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事件</title>
+    <style>
+        body{
+            -width: 2000px;
+            -height: 2000px;
+        }
+        div{
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            height: 100px;
+            width: 100px;
+            border-radius: 50%;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+<div id="d1"></div>
+
+</body>
+</html>
+<script>
+    var oDiv = document.getElementById('d1')
+
+    //一个事件只能写一个处理函数
+    // oDiv.onclick = function () {
+    //     alert("好哈")
+    // }
+    //
+    //  oDiv.onclick = function () {
+    //     alert("哈哈")
+    // }
+
+    //给一个事件绑定多个处理函数
+    //第一个参数是，事件类型
+    // 第二个参数是事件处理函数
+    //di三个参数是 false是冒泡阶段处理，true是捕获阶段处理，默认是冒泡阶段
+    oDiv.addEventListener('click',function () {
+        alert(1111)
+    },false)
+
+    function do2() {
+        alert(22222)
+    }
+    oDiv.addEventListener('click',do2,false)
+
+    //移出绑定
+    oDiv.removeEventListener('click',do2)
+</script>

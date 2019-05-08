@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事件</title>
+    <style>
+        body{
+            -width: 2000px;
+            -height: 2000px;
+        }
+        div{
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            height: 100px;
+            width: 100px;
+            border-radius: 50%;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+<div id="d1"></div>
+
+</body>
+</html>
+<script>
+    var oDiv = document.getElementById('d1')
+
+   document.onclick = function (e) {
+       var ev = e || event
+
+       //鼠标位置
+       //以窗口左上角为原点，不受窗口滚动影响
+       // console.log("client",ev.clientX,ev.clientY)
+       //
+       // //以窗口左上角为原点，受窗口滚动影响
+       // console.log("page",ev.pageX,ev.pageY)
+       // //以屏幕左上角为坐标原点
+       // console.log("screen",ev.screenX,ev.screenY)
+       // console.log(parseInt(ev.clientX))
+       // console.log(oDiv.offsetWidth,typeof oDiv.offsetWidth)
+       // oDiv.style.left = '' + (parseInt(ev.clientX) - parseInt(oDiv.offsetWidth)/2) +'px'
+       // oDiv.style.top = '' + ev.clientY +'px'
+
+
+   }
+
+    document.onmousemove = function(e){
+        var ev = e || event
+        oDiv.style.left = '' + (parseInt(ev.clientX) - oDiv.offsetWidth/2) +'px'
+        oDiv.style.top = '' + (ev.clientY - oDiv.offsetHeight/2)+'px'
+    }
+
+
+   //按键信息
+    document.onkeydown = function (e) {
+        var ev = e || event
+        // console.log(ev.keyCode)
+        var x = parseInt(oDiv.offsetLeft)
+        var y = parseInt(oDiv.offsetTop)
+        switch (ev.keyCode){
+            case 40:
+                // console.log("下")
+                oDiv.style.top = '' + (y + 10) + 'px'
+                break
+            case 39:
+                // console.log("右")
+                oDiv.style.left = '' + (x + 10) + 'px'
+                break
+            case 38:
+                oDiv.style.top = '' + (y - 10) + 'px'
+                break
+            case 37:
+                oDiv.style.left = '' + (x - 10) + 'px'
+        }
+    }
+
+    //阻止右键菜单弹出
+    document.oncontextmenu = function ()
+    {
+        return false;
+    }
+</script>
